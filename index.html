@@ -524,32 +524,319 @@
             color: #666;
         }
 
+        /* Login Modal */
+        .login-modal {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-modal.hidden {
+            display: none;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-error {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Recipe Modal */
+        .recipe-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .recipe-modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .recipe-modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .recipe-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .recipe-modal-header h2 {
+            color: #667eea;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .close-modal:hover {
+            background: #c82333;
+        }
+
+        /* Filters Bar */
+        .filters-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .filters-bar .filter-group {
+            margin-bottom: 0;
+        }
+
+        .filters-bar .btn {
+            margin-bottom: 0;
+        }
+
+        /* Floating Add Button */
+        .floating-add-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .floating-add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Header with logout */
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        /* Content area without sidebar */
+        .content-area-full {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .main-content-full {
+            display: block;
+        }
+
         @media (max-width: 768px) {
-            .main-content {
+            .filters-bar {
                 grid-template-columns: 1fr;
+            }
+            
+            .floating-add-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🍳 App de Recetas</h1>
-            <p class="subtitle">Encuentra y gestiona tus recetas favoritas</p>
-            <div class="storage-info">
-                <strong>ℹ️ Información de Almacenamiento:</strong>
-                Las recetas se guardan en el almacenamiento local de tu navegador (localStorage). 
-                Los datos persisten entre sesiones, pero se perderán si limpias la caché del navegador.
-            </div>
-        </header>
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-box">
+            <h2>🔐 Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">Usuario</label>
+                    <input type="text" id="loginUsername" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" required autocomplete="current-password">
+                </div>
+                <div id="loginError" class="login-error hidden"></div>
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
 
-        <div class="main-content">
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <!-- Agregar Receta -->
-                <div class="section">
-                    <h2 class="section-title">Agregar Receta</h2>
-                    <form id="recipeForm">
+    <!-- App Content (hidden until login) -->
+    <div id="appContent" class="hidden">
+        <div class="container">
+            <header>
+                <h1>🍳 App de Recetas</h1>
+                <p class="subtitle">Encuentra y gestiona tus recetas favoritas</p>
+                <div class="header-actions">
+                    <div class="storage-info">
+                        <strong>ℹ️ Almacenamiento: Firebase Firestore</strong>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                </div>
+            </header>
+
+            <!-- Filters Bar -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label for="filterType">Tipo de Comida</label>
+                    <select id="filterType">
+                        <option value="">Todos</option>
+                        <option value="Desayuno">Desayuno</option>
+                        <option value="Almuerzo">Almuerzo</option>
+                        <option value="Cena">Cena</option>
+                        <option value="Postre">Postre</option>
+                        <option value="Bebida">Bebida</option>
+                        <option value="Aperitivo">Aperitivo</option>
+                        <option value="Snack">Snack</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterTags">Tags</label>
+                    <input type="text" id="filterTags" placeholder="ej: vegano, rápido">
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterIngredient">Ingrediente</label>
+                    <input type="text" id="filterIngredient" placeholder="Buscar por ingrediente">
+                </div>
+
+                <div class="filter-group">
+                    <button type="button" class="btn btn-primary" onclick="applyFilters()">Aplicar Filtros</button>
+                </div>
+
+                <div class="filter-group">
+                    <button type="button" class="btn btn-secondary" onclick="clearFilters()">Limpiar</button>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area-full">
+                <div id="recipesGrid" class="recipes-grid">
+                    <!-- Las recetas se mostrarán aquí -->
+                </div>
+
+                <div id="recipeDetail" class="recipe-detail">
+                    <div class="recipe-detail-header">
+                        <div id="detailImageContainer"></div>
+                        <h2 class="recipe-detail-title" id="detailTitle"></h2>
+                        <span class="recipe-type" id="detailType"></span>
+                        <div class="recipe-tags" id="detailTags"></div>
+                        <div class="recipe-detail-info" id="detailInfo"></div>
+                    </div>
+
+                    <div class="ingredients-list">
+                        <h3>📋 Ingredientes</h3>
+                        <div id="detailIngredients"></div>
+                    </div>
+
+                    <div class="steps-list">
+                        <h3>👨‍🍳 Pasos a Seguir</h3>
+                        <div id="detailSteps"></div>
+                    </div>
+
+                    <div class="edit-buttons">
+                        <button type="button" class="btn btn-primary" onclick="closeDetail()">Cerrar</button>
+                        <button type="button" class="btn btn-edit" id="editDetailButton" onclick="editRecipeFromDetail()">✏️ Editar Receta</button>
+                        <button type="button" class="btn btn-delete" id="deleteDetailButton" onclick="deleteRecipeFromDetail()">🗑️ Eliminar Receta</button>
+                    </div>
+                    <input type="hidden" id="detailRecipeId" value="">
+                </div>
+
+                <div id="noResults" class="no-results hidden">
+                    <p>No se encontraron recetas con los filtros aplicados.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Add Button -->
+        <button class="floating-add-btn" onclick="openRecipeModal()" title="Agregar Receta">+</button>
+
+        <!-- Recipe Modal -->
+        <div id="recipeModal" class="recipe-modal">
+            <div class="recipe-modal-content">
+                <div class="recipe-modal-header">
+                    <h2 id="modalTitle">Agregar Receta</h2>
+                    <button class="close-modal" onclick="closeRecipeModal()">×</button>
+                </div>
+                <form id="recipeForm">
                         <div class="form-group">
                             <label for="recipeName">Nombre de la Receta</label>
                             <input type="text" id="recipeName" required>
@@ -639,90 +926,10 @@
 
                         <div class="edit-buttons" id="formActions">
                             <button type="submit" class="btn btn-primary" id="submitButton">Guardar Receta</button>
-                            <button type="button" class="btn btn-secondary hidden" id="cancelEditButton" onclick="cancelEdit()">Cancelar</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeRecipeModal()">Cancelar</button>
                         </div>
                     </form>
                     <input type="hidden" id="editingRecipeId" value="">
-                </div>
-
-                <!-- Carga Masiva -->
-                <div class="section">
-                    <h2 class="section-title">Carga Masiva</h2>
-                    <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                        <p>📁 Click para cargar CSV/JSON</p>
-                        <input type="file" id="fileInput" accept=".csv,.json">
-                    </div>
-                    <button type="button" class="btn btn-secondary" onclick="downloadTemplate()">Descargar Plantilla CSV</button>
-                </div>
-
-                <!-- Filtros -->
-                <div class="section filters">
-                    <h2 class="section-title">Filtros</h2>
-                    <div class="filter-group">
-                        <label for="filterType">Tipo de Comida</label>
-                        <select id="filterType">
-                            <option value="">Todos</option>
-                            <option value="Desayuno">Desayuno</option>
-                            <option value="Almuerzo">Almuerzo</option>
-                            <option value="Cena">Cena</option>
-                            <option value="Postre">Postre</option>
-                            <option value="Bebida">Bebida</option>
-                            <option value="Aperitivo">Aperitivo</option>
-                            <option value="Snack">Snack</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="filterTags">Tags</label>
-                        <input type="text" id="filterTags" placeholder="ej: vegano, rápido">
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="filterIngredient">Ingrediente</label>
-                        <input type="text" id="filterIngredient" placeholder="Buscar por ingrediente">
-                    </div>
-
-                    <button type="button" class="btn btn-primary" onclick="applyFilters()">Aplicar Filtros</button>
-                    <button type="button" class="btn btn-secondary" onclick="clearFilters()">Limpiar</button>
-                </div>
-            </div>
-
-            <!-- Content Area -->
-            <div class="content-area">
-                <h2 class="section-title">Recetas</h2>
-                <div id="recipesGrid" class="recipes-grid">
-                    <!-- Las recetas se mostrarán aquí -->
-                </div>
-
-                <div id="recipeDetail" class="recipe-detail">
-                    <div class="recipe-detail-header">
-                        <div id="detailImageContainer"></div>
-                        <h2 class="recipe-detail-title" id="detailTitle"></h2>
-                        <span class="recipe-type" id="detailType"></span>
-                        <div class="recipe-tags" id="detailTags"></div>
-                        <div class="recipe-detail-info" id="detailInfo"></div>
-                    </div>
-
-                    <div class="ingredients-list">
-                        <h3>📋 Ingredientes</h3>
-                        <div id="detailIngredients"></div>
-                    </div>
-
-                    <div class="steps-list">
-                        <h3>👨‍🍳 Pasos a Seguir</h3>
-                        <div id="detailSteps"></div>
-                    </div>
-
-                    <div class="edit-buttons">
-                        <button type="button" class="btn btn-primary" onclick="closeDetail()">Cerrar</button>
-                        <button type="button" class="btn btn-edit" id="editDetailButton" onclick="editRecipeFromDetail()">✏️ Editar Receta</button>
-                        <button type="button" class="btn btn-delete" id="deleteDetailButton" onclick="deleteRecipeFromDetail()">🗑️ Eliminar Receta</button>
-                    </div>
-                    <input type="hidden" id="detailRecipeId" value="">
-                </div>
-
-                <div id="noResults" class="no-results hidden">
-                    <p>No se encontraron recetas con los filtros aplicados.</p>
                 </div>
             </div>
         </div>
@@ -966,32 +1173,83 @@
             }
         }
 
+        // ============================================
+        // LOGIN FUNCTIONS
+        // ============================================
+        const ADMIN_USER = 'admin';
+        const ADMIN_PASS = 'admin';
+
+        async function checkLogin() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                await showApp();
+            } else {
+                showLogin();
+            }
+        }
+
+        function showLogin() {
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('appContent').classList.add('hidden');
+        }
+
+        async function showApp() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('appContent').classList.remove('hidden');
+            await loadRecipes();
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            showLogin();
+        }
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+
+            if (username === ADMIN_USER && password === ADMIN_PASS) {
+                localStorage.setItem('isLoggedIn', 'true');
+                errorDiv.classList.add('hidden');
+                showApp();
+            } else {
+                errorDiv.textContent = 'Usuario o contraseña incorrectos';
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // ============================================
+        // MODAL FUNCTIONS
+        // ============================================
+        function openRecipeModal() {
+            resetForm();
+            document.getElementById('modalTitle').textContent = 'Agregar Receta';
+            document.getElementById('recipeModal').classList.add('active');
+        }
+
+        function closeRecipeModal() {
+            document.getElementById('recipeModal').classList.remove('active');
+            resetForm();
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('recipeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRecipeModal();
+            }
+        });
+
         // Cargar recetas al iniciar
         document.addEventListener('DOMContentLoaded', async function() {
-            await loadRecipes();
+            checkLogin();
             setupEventListeners();
-            
-            // Mostrar información de almacenamiento
-            if (USE_FIREBASE && db) {
-                document.querySelector('.storage-info').innerHTML = `
-                    <strong>🔥 Almacenamiento: Firebase Firestore</strong>
-                    Las recetas se guardan en la nube y se sincronizan entre dispositivos.
-                    No se perderán al limpiar la caché del navegador.
-                `;
-            } else {
-                document.querySelector('.storage-info').innerHTML = `
-                    <strong>💾 Almacenamiento: localStorage</strong>
-                    Las recetas se guardan localmente en tu navegador.
-                    <a href="FIREBASE_SETUP.md" target="_blank" style="color: #0066cc; text-decoration: underline;">
-                        Configura Firebase para guardar en la nube
-                    </a>
-                `;
-            }
         });
 
         function setupEventListeners() {
             document.getElementById('recipeForm').addEventListener('submit', handleFormSubmit);
-            document.getElementById('fileInput').addEventListener('change', handleFileUpload);
             document.getElementById('recipeTags').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     e.preventDefault();
@@ -1072,7 +1330,7 @@
             }
 
             renderRecipes();
-            resetForm();
+            closeRecipeModal();
             
             // Si estaba editando desde el detalle, actualizar la vista
             if (editingRecipeId && document.getElementById('recipeDetail').classList.contains('active')) {
@@ -1084,11 +1342,12 @@
             document.getElementById('recipeForm').reset();
             document.getElementById('tagsContainer').innerHTML = '';
             document.getElementById('recipeImageUrl').value = '';
-            document.getElementById('imagePreview').classList.add('hidden');
+            const previewImg = document.getElementById('imagePreview');
+            previewImg.classList.add('hidden');
+            previewImg.src = '';
             document.getElementById('recipeImage').value = '';
             document.getElementById('editingRecipeId').value = '';
             document.getElementById('submitButton').textContent = 'Guardar Receta';
-            document.getElementById('cancelEditButton').classList.add('hidden');
             currentImageData = null;
             editingRecipeId = null;
             document.getElementById('ingredientsContainer').innerHTML = `
@@ -1121,11 +1380,6 @@
             document.getElementById('stepsContainer').innerHTML = '<div class="step-item"><input type="text" placeholder="Paso a paso" class="step-text"><button type="button" class="btn btn-small btn-secondary" onclick="removeStep(this)">-</button></div>';
         }
 
-        function cancelEdit() {
-            resetForm();
-            // Scroll al formulario
-            document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
-        }
 
         function addTag() {
             const input = document.getElementById('recipeTags');
@@ -1335,73 +1589,6 @@
             document.getElementById('recipesGrid').style.display = 'grid';
         }
 
-        async function handleFileUpload(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                try {
-                    let data;
-                    if (file.name.endsWith('.json')) {
-                        data = JSON.parse(e.target.result);
-                    } else if (file.name.endsWith('.csv')) {
-                        data = parseCSV(e.target.result);
-                    }
-                    
-                    if (Array.isArray(data)) {
-                        for (const recipe of data) {
-                            recipe.id = Date.now() + Math.random();
-                            await addRecipe(recipe);
-                        }
-                        renderRecipes();
-                        alert(`Se cargaron ${data.length} recetas exitosamente!`);
-                    } else {
-                        alert('Formato de archivo no válido');
-                    }
-                } catch (error) {
-                    alert('Error al leer el archivo: ' + error.message);
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function parseCSV(csvText) {
-            const lines = csvText.split('\n');
-            const headers = lines[0].split(',').map(h => h.trim());
-            const recipes = [];
-
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].trim()) continue;
-                const values = lines[i].split(',').map(v => v.trim());
-                const recipe = {
-                    name: values[0] || '',
-                    type: values[1] || '',
-                    tags: values[2] ? values[2].split(';').map(t => t.trim()) : [],
-                    calories: values[3] ? parseInt(values[3]) : null,
-                    servings: values[4] ? parseInt(values[4]) : null,
-                    image: values[5] || null,
-                    ingredients: values[6] ? JSON.parse(values[6]) : [],
-                    steps: values[7] ? values[7].split(';').map(s => s.trim()) : []
-                };
-                recipes.push(recipe);
-            }
-
-            return recipes;
-        }
-
-        function downloadTemplate() {
-            const template = `Nombre,Tipo,Tags,Calorías,Porciones,Imagen,Ingredientes,Pasos
-Pasta Carbonara,Cena,"italiana; rápida; pasta",520,4,,"[{\"name\":\"Pasta\",\"quantity\":\"400g\"},{\"name\":\"Panceta\",\"quantity\":\"200g\"}]","Cocer la pasta; Freír la panceta; Mezclar todo"`
-            
-            const blob = new Blob([template], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'plantilla_recetas.csv';
-            a.click();
-            window.URL.revokeObjectURL(url);
-        }
 
         function editRecipe(id) {
             const recipe = recipes.find(r => r.id === id);
@@ -1516,18 +1703,25 @@ Pasta Carbonara,Cena,"italiana; rápida; pasta",520,4,,"[{\"name\":\"Pasta\",\"q
                     document.getElementById('imagePreview').src = recipe.image;
                     document.getElementById('imagePreview').classList.remove('hidden');
                 } else {
+                    currentImageData = null;
                     document.getElementById('imagePreview').src = recipe.image;
                     document.getElementById('imagePreview').classList.remove('hidden');
                 }
+            } else {
+                currentImageData = null;
+                document.getElementById('imagePreview').src = '';
+                document.getElementById('imagePreview').classList.add('hidden');
             }
 
-            // Scroll al formulario
-            document.querySelector('.sidebar').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('modalTitle').textContent = 'Editar Receta';
+            document.getElementById('submitButton').textContent = 'Actualizar Receta';
+            document.getElementById('recipeModal').classList.add('active');
         }
 
         function editRecipeFromDetail() {
             const id = parseInt(document.getElementById('detailRecipeId').value);
             if (id) {
+                closeDetail();
                 editRecipe(id);
             }
         }
