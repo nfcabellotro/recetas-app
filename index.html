@@ -630,6 +630,48 @@
             letter-spacing: 0.3px;
         }
 
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20000;
+            backdrop-filter: blur(2px);
+        }
+
+        .loading-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: var(--color-bg);
+            padding: 16px 24px;
+            border-radius: 18px;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+            font-size: 18px;
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .loading-icon {
+            font-size: 28px;
+            animation: loading-bounce 0.9s ease-in-out infinite;
+        }
+
+        @keyframes loading-bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
         /* Login Modal */
         .login-modal {
             display: flex;
@@ -822,6 +864,12 @@
     </style>
 </head>
 <body>
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-icon">🍽️</div>
+            <div id="loadingMessage">Cargando...</div>
+        </div>
+    </div>
     <!-- Login Modal -->
     <div id="loginModal" class="login-modal">
         <div class="login-box">
@@ -851,11 +899,11 @@
                         <div class="brand-text">
                             <h1>Kali.AI</h1>
                             <p class="subtitle">Comer inteligente, disfrutar sin culpa</p>
-                        </div>
+                    </div>
                     </div>
                     <div class="header-user">
                         <span id="currentUserDisplay">Usuario</span>
-                        <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+                    <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
                     </div>
                 </div>
             </header>
@@ -1128,6 +1176,27 @@
         };
         let editingRecipeId = null;
         let currentUserName = '';
+        let loadingCount = 0;
+
+        function showLoading(message) {
+            const overlay = document.getElementById('loadingOverlay');
+            const messageElement = document.getElementById('loadingMessage');
+            if (!overlay || !messageElement) return;
+            loadingCount++;
+            messageElement.textContent = message || 'Cargando...';
+            overlay.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            const overlay = document.getElementById('loadingOverlay');
+            const messageElement = document.getElementById('loadingMessage');
+            if (!overlay || !messageElement) return;
+            loadingCount = Math.max(loadingCount - 1, 0);
+            if (loadingCount === 0) {
+                overlay.classList.add('hidden');
+                messageElement.textContent = 'Cargando...';
+            }
+        }
 
         const RECIPE_TYPE_OPTIONS = [
             "Desayuno",
@@ -1217,6 +1286,8 @@
         // ============================================
         
         async function loadRecipes() {
+            showLoading('Cargando recetas...');
+            try {
             if (USE_FIREBASE && db) {
                 try {
                     const snapshot = await db.collection('recipes').get();
@@ -1224,26 +1295,29 @@
                         const data = doc.data();
                         // Asegurar que el ID sea un número si es posible, sino mantener el string
                         const id = isNaN(doc.id) ? doc.id : parseInt(doc.id);
-                        return normalizeRecipe({ ...data, id: id });
+                            return normalizeRecipe({ ...data, id: id });
                     });
                     console.log('✅ Recetas cargadas desde Firebase:', recipes.length);
                 } catch (error) {
                     console.error('❌ Error al cargar recetas desde Firebase:', error);
                     // Intentar cargar desde localStorage como respaldo
-                    recipes = (JSON.parse(localStorage.getItem('recipes')) || []).map(normalizeRecipe);
+                        recipes = (JSON.parse(localStorage.getItem('recipes')) || []).map(normalizeRecipe);
                 }
             } else {
                 // Usar localStorage
-                recipes = (JSON.parse(localStorage.getItem('recipes')) || []).map(normalizeRecipe);
+                    recipes = (JSON.parse(localStorage.getItem('recipes')) || []).map(normalizeRecipe);
             }
             
             // Cargar recetas de ejemplo si no hay ninguna
             if (recipes.length === 0) {
-                recipes = sampleRecetas.map(normalizeRecipe);
+                    recipes = sampleRecetas.map(normalizeRecipe);
                 await saveRecipes();
             }
             
             renderRecipes();
+            } finally {
+                hideLoading();
+            }
         }
 
         async function saveRecipes() {
@@ -1342,7 +1416,6 @@
         // ============================================
         // LOGIN FUNCTIONS
         // ============================================
-        const ADMIN_USER = 'admin';
         const ADMIN_PASS = 'admin';
 
         function updateHeaderUser() {
@@ -1355,7 +1428,7 @@
         async function checkLogin() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (isLoggedIn) {
-                currentUserName = localStorage.getItem('loggedInUser') || ADMIN_USER;
+                currentUserName = localStorage.getItem('loggedInUser') || '';
                 await showApp();
             } else {
                 showLogin();
@@ -1371,7 +1444,7 @@
             document.getElementById('loginModal').classList.add('hidden');
             document.getElementById('appContent').classList.remove('hidden');
             if (!currentUserName) {
-                currentUserName = localStorage.getItem('loggedInUser') || ADMIN_USER;
+                currentUserName = localStorage.getItem('loggedInUser') || '';
             }
             updateHeaderUser();
             await loadRecipes();
@@ -1379,8 +1452,8 @@
 
         function logout() {
             localStorage.removeItem('isLoggedIn');
-             localStorage.removeItem('loggedInUser');
-             currentUserName = '';
+            localStorage.removeItem('loggedInUser');
+            currentUserName = '';
             showLogin();
             updateHeaderUser();
         }
@@ -1392,15 +1465,22 @@
             const password = document.getElementById('loginPassword').value;
             const errorDiv = document.getElementById('loginError');
 
-            if (username === ADMIN_USER && password === ADMIN_PASS) {
+            const trimmedUsername = username.trim();
+            if (!trimmedUsername) {
+                errorDiv.textContent = 'Ingresa un nombre de usuario';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            if (password === ADMIN_PASS) {
                 localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('loggedInUser', username);
-                currentUserName = username;
+                localStorage.setItem('loggedInUser', trimmedUsername);
+                currentUserName = trimmedUsername;
                 errorDiv.classList.add('hidden');
                 showApp();
                 updateHeaderUser();
             } else {
-                errorDiv.textContent = 'Usuario o contraseña incorrectos';
+                errorDiv.textContent = 'Contraseña incorrecta';
                 errorDiv.classList.remove('hidden');
             }
         });
@@ -1497,6 +1577,7 @@
                 return;
             }
 
+            const isEditing = Boolean(editingRecipeId);
             const recipeId = editingRecipeId || Date.now();
             const recipe = {
                 id: recipeId,
@@ -1511,22 +1592,35 @@
                 image
             };
 
-            if (editingRecipeId) {
-                // Actualizar receta existente
+            const detailWasOpen = document.getElementById('recipeDetail').classList.contains('active');
+            const editingIdBeforeReset = editingRecipeId;
+            let successMessage = '';
+
+            showLoading(isEditing ? 'Actualizando receta...' : 'Guardando receta...');
+            try {
+                if (isEditing) {
                 await updateRecipe(editingRecipeId, recipe);
-                alert('Receta actualizada exitosamente!');
+                    successMessage = 'Receta actualizada exitosamente!';
             } else {
-                // Agregar nueva receta
                 await addRecipe(recipe);
-                alert('Receta guardada exitosamente!');
+                    successMessage = 'Receta guardada exitosamente!';
             }
 
             renderRecipes();
             closeRecipeModal();
             
-            // Si estaba editando desde el detalle, actualizar la vista
-            if (editingRecipeId && document.getElementById('recipeDetail').classList.contains('active')) {
-                showRecipeDetail(editingRecipeId);
+                if (isEditing && detailWasOpen) {
+                    showRecipeDetail(editingIdBeforeReset);
+                }
+            } catch (error) {
+                console.error('❌ Error al guardar la receta:', error);
+                alert('Ocurrió un error al guardar la receta. Intenta nuevamente.');
+            } finally {
+                hideLoading();
+            }
+
+            if (successMessage) {
+                alert(successMessage);
             }
         }
 
@@ -1956,16 +2050,27 @@
                 return;
             }
 
-            await deleteRecipeFromStorage(id);
-            renderRecipes();
-            
-            // Si estaba viendo el detalle de esta receta, cerrarlo
-            if (document.getElementById('recipeDetail').classList.contains('active') && 
-                parseInt(document.getElementById('detailRecipeId').value) === id) {
-                closeDetail();
+            const detailWasOpen = document.getElementById('recipeDetail').classList.contains('active');
+            showLoading('Eliminando receta...');
+            let success = false;
+            try {
+                await deleteRecipeFromStorage(id);
+                renderRecipes();
+                
+                if (detailWasOpen && parseInt(document.getElementById('detailRecipeId').value) === id) {
+                    closeDetail();
+                }
+                success = true;
+            } catch (error) {
+                console.error('❌ Error al eliminar la receta:', error);
+                alert('Ocurrió un error al eliminar la receta. Intenta nuevamente.');
+            } finally {
+                hideLoading();
             }
-            
-            alert('Receta eliminada exitosamente!');
+
+            if (success) {
+                alert('Receta eliminada exitosamente!');
+            }
         }
 
         function deleteRecipeFromDetail() {
