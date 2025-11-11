@@ -1129,6 +1129,7 @@
         // ============================================
         
         const USE_FIREBASE = true; // Firebase habilitado
+        const ENABLE_SAMPLE_DATA = !USE_FIREBASE; // Solo sembrar datos en modo local
         
         const firebaseConfig = {
             apiKey: "AIzaSyDnPPTwPYFCLAeQK9X8lbAHGbkJWOBTzkE",
@@ -1309,9 +1310,13 @@
             }
             
             // Cargar recetas de ejemplo si no hay ninguna
-            if (recipes.length === 0) {
-                    recipes = sampleRecetas.map(normalizeRecipe);
-                await saveRecipes();
+            if (recipes.length === 0 && ENABLE_SAMPLE_DATA) {
+                recipes = sampleRecetas.map(normalizeRecipe);
+                if (!USE_FIREBASE || !db) {
+                    await saveRecipes();
+                } else {
+                    console.warn('⚠️ Datos de ejemplo disponibles pero no se insertan porque Firebase está habilitado.');
+                }
             }
             
             renderRecipes();
