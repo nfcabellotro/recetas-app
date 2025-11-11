@@ -1529,17 +1529,81 @@
 
         let currentImageData = null;
 
-        function handleImageUpload(event) {
+        function getBase64Size(dataUrl) {
+            if (!dataUrl || !dataUrl.startsWith('data:')) return 0;
+            const base64String = dataUrl.split(',')[1] || '';
+            const padding = (base64String.match(/=+$/) || [''])[0].length;
+            return Math.ceil((base64String.length * 3) / 4) - padding;
+        }
+
+        function compressImageFile(file, options = {}) {
+            const {
+                maxWidth = 1200,
+                maxHeight = 1200,
+                quality = 0.8,
+                outputType = 'image/jpeg'
+            } = options;
+
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (loadEvent) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let { width, height } = img;
+                        const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
+                        const canvas = document.createElement('canvas');
+                        canvas.width = Math.round(width * ratio);
+                        canvas.height = Math.round(height * ratio);
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        canvas.toBlob((blob) => {
+                            if (!blob) {
+                                resolve(loadEvent.target.result);
+                                return;
+                            }
+                            const readerResult = new FileReader();
+                            readerResult.onload = () => resolve(readerResult.result);
+                            readerResult.onerror = () => reject(readerResult.error);
+                            readerResult.readAsDataURL(blob);
+                        }, outputType, quality);
+                    };
+                    img.onerror = () => reject(new Error('No se pudo procesar la imagen.'));
+                    img.src = loadEvent.target.result;
+                };
+                reader.onerror = () => reject(reader.error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleImageUpload(event) {
             const file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    currentImageData = e.target.result;
+                showLoading('Procesando imagen...');
+                try {
+                    const compressedDataUrl = await compressImageFile(file, {
+                        maxWidth: 1200,
+                        maxHeight: 1200,
+                        quality: 0.82,
+                        outputType: 'image/jpeg'
+                    });
+                    currentImageData = compressedDataUrl;
                     const preview = document.getElementById('imagePreview');
-                    preview.src = e.target.result;
+                    preview.src = compressedDataUrl;
                     preview.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
+
+                    const approxBytes = getBase64Size(compressedDataUrl);
+                    if (approxBytes > 950000) {
+                        alert('La imagen sigue siendo grande. Considera subir una foto de menor resolución o usar una URL.');
+                    }
+                } catch (error) {
+                    console.error('❌ Error al procesar la imagen:', error);
+                    alert('No se pudo procesar la imagen. Intenta con una versión más liviana.');
+                    event.target.value = '';
+                    currentImageData = null;
+                } finally {
+                    hideLoading();
+                }
             }
         }
 
@@ -1580,6 +1644,14 @@
             if (types.length === 0) {
                 alert('Selecciona al menos un tipo de comida');
                 return;
+            }
+
+            if (image && image.startsWith('data:')) {
+                const imageBytes = getBase64Size(image);
+                if (imageBytes > 1000000) {
+                    alert('La imagen es demasiado pesada para guardarla. Intenta con una versión más liviana o usa una URL.');
+                    return;
+                }
             }
 
             const isEditing = Boolean(editingRecipeId);
