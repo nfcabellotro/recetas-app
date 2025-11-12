@@ -208,33 +208,564 @@
             margin-top: 5px;
         }
 
-        .type-options {
+        .chips-input {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .type-option {
+        .chips-field {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 6px;
+            min-height: 42px;
+            border: 1.5px solid #E2E8E5;
+            border-radius: 10px;
+            background: var(--color-bg);
+            padding: 6px 40px 6px 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .chips-field:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.12);
+        }
+
+        .chips-container {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
-            border-radius: 16px;
-            border: 1px solid rgba(0, 200, 150, 0.3);
+            overflow: hidden;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .chips-container span,
+        .chips-container .filter-chip,
+        .chips-container .chip-counter {
+            flex-shrink: 0;
+        }
+
+        .chip-counter {
             background: rgba(0, 200, 150, 0.08);
-            color: var(--color-text);
-            font-size: 13px;
+            color: var(--color-primary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .chips-placeholder {
+            flex: 1;
+            font-size: 11px;
+            color: var(--color-text-secondary);
+            opacity: 0.6;
+            white-space: nowrap;
+            display: inline-block;
+            pointer-events: none;
+        }
+
+        .chips-dropdown-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: var(--color-text-secondary);
+            font-size: 18px;
             cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .chips-dropdown-toggle:hover,
+        .chips-dropdown-toggle:focus {
+            background: rgba(0, 200, 150, 0.12);
+            color: var(--color-primary);
+            outline: none;
+        }
+
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 200, 150, 0.12);
+            color: var(--color-primary);
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            border: 1px solid rgba(0, 200, 150, 0.2);
+        }
+
+        .filter-chip span {
+            display: inline-block;
+            max-width: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chip-remove {
+            background: transparent;
+            border: none;
+            color: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        .chip-remove:hover {
+            color: var(--color-text);
+        }
+
+        .chips-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30000;
+            padding: 20px;
+        }
+
+        .chips-modal.hidden {
+            display: none;
+        }
+
+        .chips-modal-content {
+            background: var(--color-bg);
+            border-radius: 18px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+            max-width: 480px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 24px;
+        }
+
+        .chips-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chips-modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .chips-modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--color-text-secondary);
+        }
+
+        .chips-modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chips-modal-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 220px;
+            overflow-y: auto;
+            padding: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+        }
+
+        .chips-modal-empty {
+            color: var(--color-text-secondary);
+            font-size: 13px;
+            padding: 4px;
+        }
+
+        .chips-modal-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            background: rgba(0, 200, 150, 0.08);
+            border-radius: 12px;
+            padding: 8px 12px;
+            border: 1px solid rgba(0, 200, 150, 0.18);
+            flex: 1 1 100%;
+        }
+
+        .chips-modal-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--color-text);
+        }
+
+        .chips-modal-checkbox input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--color-primary);
+        }
+
+        .chips-modal-remove {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        .chips-modal-remove:hover {
+            color: var(--color-primary);
+        }
+
+        .chips-modal-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chips-modal-input input {
+            flex: 1;
+            border: 1.5px solid #E2E8E5;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chips-modal-input input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.15);
+        }
+
+        .chips-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .ai-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30000;
+            padding: 20px;
+        }
+
+        .ai-modal.hidden {
+            display: none;
+        }
+
+        .ai-modal-content {
+            background: var(--color-bg);
+            border-radius: 20px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+            max-width: 540px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            padding: 26px;
+        }
+
+        .ai-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .ai-modal-header h3 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--color-text);
+        }
+
+        .ai-modal-subtitle {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: var(--color-text-secondary);
+        }
+
+        .ai-modal-close {
+            background: none;
+            border: none;
+            font-size: 26px;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+        }
+
+        .ai-modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .ai-modal-form .form-row {
+            display: flex;
+            gap: 14px;
+        }
+
+        .ai-modal-form .form-row .form-group {
+            flex: 1;
+        }
+
+        .ai-modal-form input,
+        .ai-modal-form select,
+        .ai-modal-form textarea {
+            width: 100%;
+            border: 1.5px solid #E2E8E5;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 14px;
+            background: var(--color-bg);
+            color: var(--color-text);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .ai-modal-form input:focus,
+        .ai-modal-form select:focus,
+        .ai-modal-form textarea:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 200, 150, 0.15);
+        }
+
+        .ai-modal-form textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .ai-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .ai-modal-result {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .ai-modal-result.hidden {
+            display: none;
+        }
+
+        .ai-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-recipe-content {
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            background: var(--color-bg-alt);
+            max-height: 240px;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ai-recipe-content h5 {
+            margin: 12px 0 6px;
+            font-size: 15px;
+            color: var(--color-text);
+        }
+
+        .ai-recipe-content ul,
+        .ai-recipe-content ol {
+            padding-left: 18px;
+        }
+
+        .ai-recipe-content li {
+            margin-bottom: 6px;
+        }
+
+        .ai-recipe-error {
+            color: #d93025;
+            font-size: 14px;
+            background: rgba(217, 48, 37, 0.08);
+            border: 1px solid rgba(217, 48, 37, 0.2);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .optional {
+            color: var(--color-text-secondary);
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        @media (max-width: 620px) {
+            .ai-modal-content {
+                padding: 20px;
+            }
+
+            .ai-modal-form .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        .filter-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .filter-dropdown-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px 12px;
+            min-height: 42px;
+            border: 1.5px solid #E2E8E5;
+            border-radius: 10px;
+            background: var(--color-bg);
+            color: var(--color-text);
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .filter-dropdown-toggle span:first-child {
+            flex: 1;
+            text-align: left;
+        }
+
+        .dropdown-arrow {
+            margin-left: 12px;
+            font-size: 14px;
+            color: var(--color-text-secondary);
+        }
+
+        .filter-dropdown-toggle:hover,
+        .filter-dropdown-toggle:focus {
+            border-color: var(--color-primary);
+            outline: none;
+        }
+
+        .filter-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            width: 100%;
+            max-height: 260px;
+            background: var(--color-bg);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.08);
+            padding: 8px 0;
+            display: none;
+            flex-direction: column;
+            z-index: 5000;
+            overflow-y: auto;
+        }
+
+        .filter-dropdown.open .filter-dropdown-menu {
+            display: flex;
+        }
+
+        .filter-type-hidden {
+            display: none;
+        }
+
+        .filter-type-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+            padding: 4px 0;
+        }
+
+        .filter-type-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: var(--color-text);
+            border-radius: 10px;
             transition: background 0.2s ease, border-color 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .filter-type-item:hover {
+            background: rgba(0, 200, 150, 0.1);
+            border-color: rgba(0, 200, 150, 0.3);
+        }
+
+        .filter-type-item span {
+            flex: 1;
+            line-height: 1.3;
+        }
+
+        .filter-type-item input {
+            accent-color: var(--color-primary);
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .type-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px 16px;
+            padding: 6px 0;
+        }
+
+        .type-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: rgba(0, 200, 150, 0.05);
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .type-option:hover {
+            background: rgba(0, 200, 150, 0.12);
+            border-color: rgba(0, 200, 150, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.12);
+        }
+
+        .type-option span {
+            flex: 1;
+            font-weight: 600;
+            color: var(--color-text);
         }
 
         .type-option input {
             accent-color: var(--color-primary);
-        }
-
-        .type-option:hover {
-            background: rgba(168, 224, 99, 0.2);
-            border-color: rgba(168, 224, 99, 0.4);
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            flex-shrink: 0;
         }
 
         .tag {
@@ -327,6 +858,9 @@
 
         .filter-group {
             margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .recipes-grid {
@@ -796,27 +1330,51 @@
         }
 
         /* Floating Add Button */
-        .floating-add-btn {
+        .floating-actions {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--color-primary);
-            color: white;
-            border: none;
-            font-size: 30px;
-            cursor: pointer;
-            box-shadow: 0 18px 30px rgba(0, 200, 150, 0.35);
-            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             z-index: 1000;
         }
 
-        .floating-add-btn:hover {
+        .floating-actions button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 18px 30px rgba(0, 200, 150, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .floating-add-btn {
+            background: var(--color-primary);
+        }
+
+        .floating-ai-btn {
+            background: #1ba57f;
+            font-size: 24px;
+        }
+
+        .floating-actions button:hover {
             transform: scale(1.08);
+            box-shadow: 0 20px 36px rgba(0, 200, 150, 0.4);
+        }
+
+        .floating-add-btn:hover {
             background: var(--color-secondary);
-            box-shadow: 0 20px 36px rgba(168, 224, 99, 0.4);
+        }
+
+        .floating-ai-btn:hover {
+            background: #14896a;
         }
 
         .logout-btn {
@@ -853,12 +1411,19 @@
                 grid-template-columns: 1fr;
             }
             
-            .floating-add-btn {
+            .floating-actions {
                 bottom: 20px;
                 right: 20px;
-                width: 50px;
-                height: 50px;
+            }
+
+            .floating-actions button {
+                width: 52px;
+                height: 52px;
                 font-size: 24px;
+            }
+
+            .floating-ai-btn {
+                font-size: 20px;
             }
         }
     </style>
@@ -911,27 +1476,72 @@
             <!-- Filters Bar -->
             <div class="filters-bar">
                 <div class="filter-group">
-                    <label for="filterType">Tipo de Comida</label>
-                    <select id="filterType">
-                        <option value="">Todos</option>
-                        <option value="Desayuno">Desayuno</option>
-                        <option value="Almuerzo">Almuerzo</option>
-                        <option value="Cena">Cena</option>
-                        <option value="Postre">Postre</option>
-                        <option value="Bebida">Bebida</option>
-                        <option value="Aperitivo">Aperitivo</option>
-                        <option value="Snack">Snack</option>
-                    </select>
+                    <label>Tipos de Comida</label>
+                    <div class="filter-dropdown" id="filterTypeDropdown">
+                        <button class="filter-dropdown-toggle" type="button">
+                            <span id="filterTypeSummary">Todos</span>
+                            <span class="dropdown-arrow">▾</span>
+                        </button>
+                        <div class="filter-dropdown-menu">
+                            <div class="filter-type-hidden">
+                                <label class="type-option">
+                                    <input type="checkbox" id="filterTypeAll" checked>
+                                    Todos
+                                </label>
+                                <label class="type-option">
+                                    <input type="checkbox" class="filter-type-checkbox" value="Desayuno">
+                                    Desayuno
+                                </label>
+                                <label class="type-option">
+                                    <input type="checkbox" class="filter-type-checkbox" value="Almuerzo">
+                                    Almuerzo
+                                </label>
+                                <label class="type-option">
+                                    <input type="checkbox" class="filter-type-checkbox" value="Cena">
+                                    Cena
+                                </label>
+                                <label class="type-option">
+                                    <input type="checkbox" class="filter-type-checkbox" value="Postre">
+                                    Postre
+                                </label>
+                                <label class="type-option">
+                                    <input type="checkbox" class="filter-type-checkbox" value="Bebida">
+                                    Bebida
+                                </label>
+                                <label class="type-option">
+                                    <input type="checkbox" class="filter-type-checkbox" value="Aperitivo">
+                                    Aperitivo
+                                </label>
+                                <label class="type-option">
+                                    <input type="checkbox" class="filter-type-checkbox" value="Snack">
+                                    Snack
+                                </label>
+                            </div>
+                            <div class="filter-type-list" id="filterTypeList"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="filter-group">
-                    <label for="filterTags">Tags</label>
-                    <input type="text" id="filterTags" placeholder="ej: vegano, rápido">
+                    <label>Tags</label>
+                    <div class="chips-input">
+                        <div class="chips-field" id="filterTagsField" tabindex="0">
+                            <div class="chips-container" id="filterTagsContainer"></div>
+                            <span class="chips-placeholder" id="filterTagsPlaceholder">Haz clic para agregar tags</span>
+                            <button type="button" class="chips-dropdown-toggle" aria-label="Gestionar tags" id="filterTagsArrow">▾</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="filter-group">
-                    <label for="filterIngredient">Ingrediente</label>
-                    <input type="text" id="filterIngredient" placeholder="Buscar por ingrediente">
+                    <label>Ingredientes</label>
+                    <div class="chips-input">
+                        <div class="chips-field" id="filterIngredientsField" tabindex="0">
+                            <div class="chips-container" id="filterIngredientsContainer"></div>
+                            <span class="chips-placeholder" id="filterIngredientsPlaceholder">Haz clic para agregar ingredientes</span>
+                            <button type="button" class="chips-dropdown-toggle" aria-label="Gestionar ingredientes" id="filterIngredientsArrow">▾</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="filter-group">
@@ -981,8 +1591,11 @@
             </div>
         </div>
 
-        <!-- Floating Add Button -->
+        <!-- Floating Buttons -->
+        <div class="floating-actions">
         <button class="floating-add-btn" onclick="openRecipeModal()" title="Agregar Receta">+</button>
+            <button class="floating-ai-btn" onclick="openAiRecipeModal()" title="Generar receta con IA">🤖</button>
+        </div>
 
         <!-- Recipe Modal -->
         <div id="recipeModal" class="recipe-modal">
@@ -1001,32 +1614,32 @@
                             <label>Tipos de Comida</label>
                             <div class="type-options" id="recipeTypeOptions">
                                 <label class="type-option">
+                                    <span>Desayuno</span>
                                     <input type="checkbox" class="type-checkbox" value="Desayuno">
-                                    Desayuno
                                 </label>
                                 <label class="type-option">
+                                    <span>Almuerzo</span>
                                     <input type="checkbox" class="type-checkbox" value="Almuerzo">
-                                    Almuerzo
                                 </label>
                                 <label class="type-option">
+                                    <span>Cena</span>
                                     <input type="checkbox" class="type-checkbox" value="Cena">
-                                    Cena
                                 </label>
                                 <label class="type-option">
+                                    <span>Postre</span>
                                     <input type="checkbox" class="type-checkbox" value="Postre">
-                                    Postre
                                 </label>
                                 <label class="type-option">
+                                    <span>Bebida</span>
                                     <input type="checkbox" class="type-checkbox" value="Bebida">
-                                    Bebida
                                 </label>
                                 <label class="type-option">
+                                    <span>Aperitivo</span>
                                     <input type="checkbox" class="type-checkbox" value="Aperitivo">
-                                    Aperitivo
                                 </label>
                                 <label class="type-option">
+                                    <span>Snack</span>
                                     <input type="checkbox" class="type-checkbox" value="Snack">
-                                    Snack
                                 </label>
                             </div>
                         </div>
@@ -1060,7 +1673,7 @@
                             <label>Ingredientes</label>
                             <div id="ingredientsContainer">
                                 <div class="ingredient-item">
-                                    <input type="text" placeholder="Ingrediente" class="ingredient-name">
+                                    <input type="text" placeholder="Ingrediente" class="ingredient-name" list="ingredientNameSuggestions">
                                     <div class="ingredient-quantity-container">
                                         <input type="number" placeholder="Cantidad" class="ingredient-quantity" step="0.01" min="0">
                                         <select class="ingredient-unit">
@@ -1086,6 +1699,7 @@
                                 </div>
                             </div>
                             <button type="button" class="btn btn-small btn-secondary" onclick="addIngredient()">+ Agregar Ingrediente</button>
+                            <datalist id="ingredientNameSuggestions"></datalist>
                         </div>
 
                         <div class="form-group">
@@ -1106,6 +1720,88 @@
                     </form>
                     <input type="hidden" id="editingRecipeId" value="">
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chipsModal" class="chips-modal hidden">
+        <div class="chips-modal-content">
+            <div class="chips-modal-header">
+                <h3 class="chips-modal-title" id="chipsModalTitle">Gestionar elementos</h3>
+                <button type="button" class="chips-modal-close" id="chipsModalCloseBtn">×</button>
+            </div>
+            <div class="chips-modal-body">
+                <div class="chips-modal-list" id="chipsModalList"></div>
+                <div class="chips-modal-input">
+                    <input type="text" id="chipsModalInput" placeholder="Escribe y presiona Enter">
+                    <button type="button" class="btn btn-secondary btn-small" id="chipsModalAddBtn">Agregar</button>
+                </div>
+            </div>
+            <div class="chips-modal-actions">
+                <button type="button" class="btn btn-secondary" id="chipsModalCancel">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="chipsModalApply">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="aiRecipeModal" class="ai-modal hidden">
+        <div class="ai-modal-content">
+            <div class="ai-modal-header">
+                <div>
+                    <h3>Generar receta con IA</h3>
+                    <p class="ai-modal-subtitle">Describe lo que buscas y Kali.AI te propondrá una receta personalizada.</p>
+                </div>
+                <button type="button" class="ai-modal-close" id="aiModalCloseBtn">×</button>
+            </div>
+            <form id="aiRecipeForm" class="ai-modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aiMealType">Tipo de comida</label>
+                        <select id="aiMealType" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="Desayuno">Desayuno</option>
+                            <option value="Almuerzo">Almuerzo</option>
+                            <option value="Cena">Cena</option>
+                            <option value="Snack">Snack</option>
+                            <option value="Postre">Postre</option>
+                            <option value="Bebida">Bebida</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="aiCalories">Calorías objetivo</label>
+                        <input type="number" id="aiCalories" placeholder="Ej: 500" min="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aiProtein">Proteínas (g) <span class="optional">(opcional)</span></label>
+                        <input type="number" id="aiProtein" placeholder="Ej: 30" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="aiCarbs">Carbohidratos (g) <span class="optional">(opcional)</span></label>
+                        <input type="number" id="aiCarbs" placeholder="Ej: 45" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="aiFats">Grasas (g) <span class="optional">(opcional)</span></label>
+                        <input type="number" id="aiFats" placeholder="Ej: 15" min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="aiIngredients">Ingredientes a incluir o restricciones <span class="optional">(opcional)</span></label>
+                    <textarea id="aiIngredients" rows="2" placeholder="Ej: incluir pollo, sin gluten, evitar frutos secos"></textarea>
+                </div>
+                <div class="ai-modal-actions">
+                    <button type="button" class="btn btn-secondary" id="aiModalCancelBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="aiModalGenerateBtn">Generar receta</button>
+                </div>
+            </form>
+            <div id="aiRecipeResult" class="ai-modal-result hidden">
+                <div class="ai-result-header">
+                    <h4>Receta sugerida</h4>
+                    <button type="button" class="btn btn-secondary btn-small" id="aiModalResetBtn">Nueva consulta</button>
+                </div>
+                <div id="aiRecipeContent" class="ai-recipe-content"></div>
+                <button type="button" class="btn btn-primary" id="aiModalSaveBtn">Guardar como receta</button>
             </div>
         </div>
     </div>
@@ -1171,13 +1867,19 @@
         
         let recipes = [];
         let currentFilters = {
-            type: '',
-            tags: '',
-            ingredient: ''
+            types: [],
+            tags: [],
+            ingredients: []
         };
         let editingRecipeId = null;
         let currentUserName = '';
         let loadingCount = 0;
+        let filterTagChips = [];
+        let filterIngredientChips = [];
+        let activeChipsModal = null;
+        let modalTempChips = [];
+        let lastAiRecipeData = null;
+        const AI_GENERATE_ENDPOINT = '/api/generate-recipe'; // Ajusta este endpoint en tu backend
 
         function showLoading(message) {
             const overlay = document.getElementById('loadingOverlay');
@@ -1197,6 +1899,624 @@
                 overlay.classList.add('hidden');
                 messageElement.textContent = 'Cargando...';
             }
+        }
+
+        function updateChipsFieldState(type, values) {
+            const placeholderId = type === 'tags' ? 'filterTagsPlaceholder' : 'filterIngredientsPlaceholder';
+            const placeholder = document.getElementById(placeholderId);
+            if (placeholder) {
+                placeholder.style.display = values.length ? 'none' : 'inline-block';
+            }
+            const arrowId = type === 'tags' ? 'filterTagsArrow' : 'filterIngredientsArrow';
+            const arrow = document.getElementById(arrowId);
+            if (arrow) {
+                arrow.setAttribute('aria-label', values.length ? `Gestionar ${type === 'tags' ? 'tags' : 'ingredientes'} (${values.length})` : `Gestionar ${type === 'tags' ? 'tags' : 'ingredientes'}`);
+            }
+        }
+
+        function renderCompactChips(containerId, values, removeCallback, type) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.innerHTML = '';
+            const maxVisible = 3;
+            values.slice(0, maxVisible).forEach(value => {
+                const chip = document.createElement('div');
+                chip.className = 'filter-chip';
+                const label = document.createElement('span');
+                label.textContent = value;
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'chip-remove';
+                removeBtn.setAttribute('aria-label', `Eliminar ${value}`);
+                removeBtn.textContent = '×';
+                removeBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    removeCallback(value);
+                });
+                chip.appendChild(label);
+                chip.appendChild(removeBtn);
+                container.appendChild(chip);
+            });
+
+            if (values.length > maxVisible) {
+                const counter = document.createElement('div');
+                counter.className = 'chip-counter';
+                counter.textContent = `+${values.length - maxVisible}`;
+                container.appendChild(counter);
+            }
+
+            updateChipsFieldState(type, values);
+        }
+
+        function addFilterTag(value) {
+            const normalized = value.trim();
+            if (!normalized) return;
+            if (filterTagChips.some(tag => tag.toLowerCase() === normalized.toLowerCase())) return;
+            filterTagChips.push(normalized);
+            renderFilterTags();
+        }
+
+        function removeFilterTag(value) {
+            filterTagChips = filterTagChips.filter(tag => tag.toLowerCase() !== value.toLowerCase());
+            renderFilterTags();
+        }
+
+        function renderFilterTags() {
+            renderCompactChips('filterTagsContainer', filterTagChips, removeFilterTag, 'tags');
+        }
+
+        function addFilterIngredient(value) {
+            const normalized = value.trim();
+            if (!normalized) return;
+            if (filterIngredientChips.some(ing => ing.toLowerCase() === normalized.toLowerCase())) return;
+            filterIngredientChips.push(normalized);
+            renderFilterIngredients();
+        }
+
+        function removeFilterIngredient(value) {
+            filterIngredientChips = filterIngredientChips.filter(ing => ing.toLowerCase() !== value.toLowerCase());
+            renderFilterIngredients();
+        }
+
+        function renderFilterIngredients() {
+            renderCompactChips('filterIngredientsContainer', filterIngredientChips, removeFilterIngredient, 'ingredients');
+        }
+
+        function openChipsModal(type) {
+            activeChipsModal = type;
+            const sourceArray = type === 'tags' ? filterTagChips : filterIngredientChips;
+            modalTempChips = sourceArray.map(value => ({ value, selected: true }));
+            const modal = document.getElementById('chipsModal');
+            if (!modal) return;
+
+            const title = document.getElementById('chipsModalTitle');
+            if (title) {
+                title.textContent = type === 'tags' ? 'Gestionar Tags' : 'Gestionar Ingredientes';
+            }
+
+            const input = document.getElementById('chipsModalInput');
+            if (input) {
+                input.value = '';
+                if (type === 'ingredients') {
+                    input.setAttribute('list', 'ingredientNameSuggestions');
+                    input.placeholder = 'Escribe un ingrediente y presiona Enter';
+                } else {
+                    input.removeAttribute('list');
+                    input.placeholder = 'Escribe un tag y presiona Enter';
+                }
+                setTimeout(() => input.focus(), 50);
+            }
+
+            renderChipsModalList();
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function renderChipsModalList() {
+            const list = document.getElementById('chipsModalList');
+            if (!list) return;
+            list.innerHTML = '';
+
+            if (!modalTempChips.length) {
+                const empty = document.createElement('p');
+                empty.textContent = 'Aún no hay elementos agregados.';
+                empty.className = 'chips-modal-empty';
+                list.appendChild(empty);
+                return;
+            }
+
+            modalTempChips.forEach((chip, index) => {
+                const item = document.createElement('div');
+                item.className = 'chips-modal-item';
+
+                const label = document.createElement('label');
+                label.className = 'chips-modal-checkbox';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = chip.selected;
+                checkbox.addEventListener('change', function() {
+                    chip.selected = checkbox.checked;
+                });
+
+                const text = document.createElement('span');
+                text.textContent = chip.value;
+
+                label.appendChild(checkbox);
+                label.appendChild(text);
+                item.appendChild(label);
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'chips-modal-remove';
+                removeBtn.setAttribute('aria-label', `Eliminar ${chip.value}`);
+                removeBtn.textContent = '×';
+                removeBtn.addEventListener('click', () => {
+                    modalTempChips.splice(index, 1);
+                    renderChipsModalList();
+                });
+
+                item.appendChild(removeBtn);
+                list.appendChild(item);
+            });
+        }
+
+        function addChipToModal() {
+            const input = document.getElementById('chipsModalInput');
+            if (!input) return;
+            const value = input.value.trim();
+            if (!value) return;
+            if (!modalTempChips.some(chip => chip.value.toLowerCase() === value.toLowerCase())) {
+                modalTempChips.push({ value, selected: true });
+                renderChipsModalList();
+            }
+            input.value = '';
+            input.focus();
+        }
+
+        function closeChipsModal(applyChanges) {
+            const modal = document.getElementById('chipsModal');
+            if (!modal) return;
+            if (applyChanges && activeChipsModal) {
+                if (activeChipsModal === 'tags') {
+                    filterTagChips = modalTempChips.filter(chip => chip.selected).map(chip => chip.value);
+                    renderFilterTags();
+                } else if (activeChipsModal === 'ingredients') {
+                    filterIngredientChips = modalTempChips.filter(chip => chip.selected).map(chip => chip.value);
+                    renderFilterIngredients();
+                }
+            }
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+            activeChipsModal = null;
+            modalTempChips = [];
+        }
+
+        const chipsModalElement = document.getElementById('chipsModal');
+        if (chipsModalElement) {
+            chipsModalElement.addEventListener('click', function(e) {
+                if (e.target === chipsModalElement) {
+                    closeChipsModal(false);
+                }
+            });
+        }
+
+        const chipsModalAddBtn = document.getElementById('chipsModalAddBtn');
+        if (chipsModalAddBtn) {
+            chipsModalAddBtn.addEventListener('click', addChipToModal);
+        }
+
+        const chipsModalApply = document.getElementById('chipsModalApply');
+        if (chipsModalApply) {
+            chipsModalApply.addEventListener('click', function() {
+                closeChipsModal(true);
+            });
+        }
+
+        const chipsModalCancel = document.getElementById('chipsModalCancel');
+        if (chipsModalCancel) {
+            chipsModalCancel.addEventListener('click', function() {
+                closeChipsModal(false);
+            });
+        }
+
+        const chipsModalCloseBtn = document.getElementById('chipsModalCloseBtn');
+        if (chipsModalCloseBtn) {
+            chipsModalCloseBtn.addEventListener('click', function() {
+                closeChipsModal(false);
+            });
+        }
+
+        const chipsModalInput = document.getElementById('chipsModalInput');
+        if (chipsModalInput) {
+            chipsModalInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addChipToModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (chipsModalElement && !chipsModalElement.classList.contains('hidden')) {
+                    closeChipsModal(false);
+                }
+                const aiModalElement = document.getElementById('aiRecipeModal');
+                if (aiModalElement && !aiModalElement.classList.contains('hidden')) {
+                    closeAiRecipeModal(false);
+                }
+            }
+        });
+
+        function resetAiRecipeModal() {
+            const form = document.getElementById('aiRecipeForm');
+            if (form) {
+                form.reset();
+            }
+            lastAiRecipeData = null;
+            const resultSection = document.getElementById('aiRecipeResult');
+            if (resultSection) {
+                resultSection.classList.add('hidden');
+            }
+            const resultContent = document.getElementById('aiRecipeContent');
+            if (resultContent) {
+                resultContent.innerHTML = '';
+            }
+            const saveBtn = document.getElementById('aiModalSaveBtn');
+            if (saveBtn) {
+                saveBtn.disabled = true;
+            }
+        }
+
+        function openAiRecipeModal() {
+            resetAiRecipeModal();
+            const modal = document.getElementById('aiRecipeModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeAiRecipeModal(applyChanges = false) {
+            const modal = document.getElementById('aiRecipeModal');
+            if (!modal) return;
+            if (!applyChanges) {
+                resetAiRecipeModal();
+            }
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        async function handleAiRecipeSubmit(e) {
+            e.preventDefault();
+            const mealType = document.getElementById('aiMealType').value;
+            const calories = document.getElementById('aiCalories').value;
+            const protein = document.getElementById('aiProtein').value;
+            const carbs = document.getElementById('aiCarbs').value;
+            const fats = document.getElementById('aiFats').value;
+            const ingredientsText = document.getElementById('aiIngredients').value;
+
+            if (!mealType || !calories) {
+                alert('Completa al menos tipo de comida y calorías.');
+                return;
+            }
+
+            const payload = {
+                mealType,
+                calories: Number(calories),
+                protein: protein ? Number(protein) : null,
+                carbs: carbs ? Number(carbs) : null,
+                fats: fats ? Number(fats) : null,
+                includeIngredients: ingredientsText ? ingredientsText.split(',').map(i => i.trim()).filter(Boolean) : []
+            };
+
+            const generateBtn = document.getElementById('aiModalGenerateBtn');
+            const resultSection = document.getElementById('aiRecipeResult');
+            const resultContent = document.getElementById('aiRecipeContent');
+            const saveBtn = document.getElementById('aiModalSaveBtn');
+
+            if (generateBtn) {
+                generateBtn.disabled = true;
+                generateBtn.textContent = 'Generando...';
+            }
+            if (resultSection) {
+                resultSection.classList.add('hidden');
+            }
+            if (resultContent) {
+                resultContent.innerHTML = '';
+            }
+            if (saveBtn) {
+                saveBtn.disabled = true;
+            }
+
+            showLoading('Generando receta con IA...');
+            try {
+                const responseData = await generateAiRecipe(payload);
+                const aiText = responseData.text ?? responseData.response ?? responseData;
+                lastAiRecipeData = parseAiRecipeResponse(aiText);
+                renderAiRecipeResult(aiText, lastAiRecipeData);
+                if (saveBtn) {
+                    saveBtn.disabled = !lastAiRecipeData;
+                }
+            } catch (error) {
+                console.error('❌ Error generando receta con IA:', error);
+                renderAiRecipeResult(error.message || 'Ocurrió un error al generar la receta.', null, true);
+            } finally {
+                hideLoading();
+                if (generateBtn) {
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generar receta';
+                }
+            }
+        }
+
+        async function generateAiRecipe(payload) {
+            const response = await fetch(AI_GENERATE_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            const rawText = await response.text();
+            if (!response.ok) {
+                throw new Error(rawText || 'No se pudo generar la receta. Verifica tu backend.');
+            }
+
+            try {
+                return JSON.parse(rawText);
+            } catch (error) {
+                return { text: rawText };
+            }
+        }
+
+        function parseAiRecipeResponse(text) {
+            if (!text) return null;
+            let cleaned = text.trim();
+            const jsonMatch = cleaned.match(/```json([\s\S]*?)```/i);
+            if (jsonMatch) {
+                cleaned = jsonMatch[1].trim();
+            }
+            try {
+                return JSON.parse(cleaned);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function renderAiRecipeResult(rawText, parsedData, isError = false) {
+            const resultSection = document.getElementById('aiRecipeResult');
+            const resultContent = document.getElementById('aiRecipeContent');
+            if (!resultSection || !resultContent) return;
+
+            if (isError) {
+                resultContent.innerHTML = `<div class="ai-recipe-error">${rawText}</div>`;
+                resultSection.classList.remove('hidden');
+                return;
+            }
+
+            if (parsedData) {
+                resultContent.innerHTML = formatAiRecipeHtml(parsedData);
+            } else {
+                resultContent.innerHTML = `
+                    <div class="ai-recipe-error">
+                        No se pudo interpretar la respuesta en formato JSON. Aquí tienes el texto recibido:
+                    </div>
+                    <pre style="white-space: pre-wrap; font-size: 13px;">${rawText}</pre>
+                `;
+            }
+            resultSection.classList.remove('hidden');
+        }
+
+        function formatAiRecipeHtml(data) {
+            let html = '';
+            if (data.title) {
+                html += `<h4>${data.title}</h4>`;
+            }
+            if (data.description) {
+                html += `<p>${data.description}</p>`;
+            }
+            if (Array.isArray(data.ingredients) && data.ingredients.length) {
+                html += '<h5>Ingredientes</h5><ul>';
+                data.ingredients.forEach(ing => {
+                    const amount = [ing.quantity, ing.unit].filter(Boolean).join(' ');
+                    html += `<li>${amount ? `${amount} - ` : ''}${ing.name || ''}</li>`;
+                });
+                html += '</ul>';
+            }
+            if (Array.isArray(data.steps) && data.steps.length) {
+                html += '<h5>Pasos</h5><ol>';
+                data.steps.forEach(step => {
+                    html += `<li>${step}</li>`;
+                });
+                html += '</ol>';
+            }
+            if (data.macros) {
+                html += '<h5>Macros estimados</h5><ul>';
+                if (data.macros.calories) html += `<li>Calorías: ${data.macros.calories}</li>`;
+                if (data.macros.protein) html += `<li>Proteínas: ${data.macros.protein} g</li>`;
+                if (data.macros.carbs) html += `<li>Carbohidratos: ${data.macros.carbs} g</li>`;
+                if (data.macros.fats) html += `<li>Grasas: ${data.macros.fats} g</li>`;
+                html += '</ul>';
+            }
+            if (Array.isArray(data.tags) && data.tags.length) {
+                html += `<h5>Tags sugeridos</h5><p>${data.tags.join(', ')}</p>`;
+            }
+            if (!html) {
+                html = `<pre style="white-space: pre-wrap; font-size: 13px;">${data}</pre>`;
+            }
+            return html;
+        }
+
+        function addTagValue(tag) {
+            if (!tag) return;
+            const tagsContainer = document.getElementById('tagsContainer');
+            if (!tagsContainer) return;
+            const tagElement = document.createElement('div');
+            tagElement.className = 'tag';
+            tagElement.innerHTML = `${tag} <span class="tag-remove" onclick="this.parentElement.remove()">×</span>`;
+            tagsContainer.appendChild(tagElement);
+        }
+
+        function applyAiRecipeToForm(data) {
+            if (!data) return;
+            closeAiRecipeModal(true);
+            openRecipeModal();
+
+            document.getElementById('modalTitle').textContent = 'Agregar Receta (desde IA)';
+
+            document.getElementById('recipeName').value = data.title || '';
+            const recipeTypeSelect = document.getElementById('recipeType');
+            if (recipeTypeSelect && data.mealType) {
+                recipeTypeSelect.value = data.mealType;
+            }
+            const macros = data.macros || {};
+            document.getElementById('recipeCalories').value = macros.calories || '';
+            document.getElementById('recipeServings').value = data.servings || macros.servings || '';
+
+            const tagsContainer = document.getElementById('tagsContainer');
+            if (tagsContainer) {
+                tagsContainer.innerHTML = '';
+                (data.tags || []).forEach(tag => addTagValue(tag));
+            }
+
+            const ingredientsContainer = document.getElementById('ingredientsContainer');
+            if (ingredientsContainer) {
+                ingredientsContainer.innerHTML = '';
+                if (Array.isArray(data.ingredients) && data.ingredients.length) {
+                    data.ingredients.forEach(ing => {
+                        addIngredient();
+                        const item = ingredientsContainer.lastElementChild;
+                        if (!item) return;
+                        const nameInput = item.querySelector('.ingredient-name');
+                        const quantityInput = item.querySelector('.ingredient-quantity');
+                        const unitSelect = item.querySelector('.ingredient-unit');
+                        if (nameInput) nameInput.value = ing.name || '';
+                        if (quantityInput) quantityInput.value = ing.quantity || '';
+                        if (unitSelect && ing.unit) {
+                            const option = Array.from(unitSelect.options).find(opt => opt.value === ing.unit);
+                            if (option) {
+                                unitSelect.value = ing.unit;
+                            } else {
+                                unitSelect.value = 'unidad';
+                            }
+                        }
+                    });
+                } else {
+                    addIngredient();
+                }
+            }
+
+            const stepsContainer = document.getElementById('stepsContainer');
+            if (stepsContainer) {
+                stepsContainer.innerHTML = '';
+                if (Array.isArray(data.steps) && data.steps.length) {
+                    data.steps.forEach(step => {
+                        addStep();
+                        const item = stepsContainer.lastElementChild;
+                        if (item) {
+                            const input = item.querySelector('.step-text');
+                            if (input) input.value = step;
+                        }
+                    });
+                } else {
+                    addStep();
+                }
+            }
+
+            const aiContent = document.getElementById('aiRecipeContent');
+            if (aiContent) {
+                aiContent.scrollTop = 0;
+            }
+        }
+
+        function getFilterTypeElements() {
+            const dropdown = document.getElementById('filterTypeDropdown');
+            if (!dropdown) return {};
+            const allCheckbox = document.getElementById('filterTypeAll');
+            const checkboxes = dropdown.querySelectorAll('.filter-type-checkbox');
+            const summary = document.getElementById('filterTypeSummary');
+            return { dropdown, allCheckbox, checkboxes, summary };
+        }
+
+        function updateFilterTypeSummary() {
+            const { allCheckbox, checkboxes, summary } = getFilterTypeElements();
+            if (!summary || !allCheckbox || !checkboxes) return;
+            const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+            if (selected.length === 0 || selected.length === checkboxes.length) {
+                allCheckbox.checked = true;
+                summary.textContent = 'Todos';
+            } else {
+                allCheckbox.checked = false;
+                summary.textContent = selected.join(', ');
+            }
+            updateFilterTypeList();
+        }
+
+        function setFilterTypesFromArray(typesArray) {
+            const { allCheckbox, checkboxes } = getFilterTypeElements();
+            if (!allCheckbox || !checkboxes) return;
+            if (!typesArray || typesArray.length === 0) {
+                allCheckbox.checked = true;
+                checkboxes.forEach(cb => cb.checked = false);
+            } else {
+                allCheckbox.checked = false;
+                checkboxes.forEach(cb => {
+                    cb.checked = typesArray.includes(cb.value);
+                });
+            }
+            updateFilterTypeSummary();
+        }
+
+        function updateFilterTypeList() {
+            const { allCheckbox, checkboxes } = getFilterTypeElements();
+            const list = document.getElementById('filterTypeList');
+            if (!list || !allCheckbox || !checkboxes || checkboxes.length === 0) return;
+            list.innerHTML = '';
+            const sourceArray = [allCheckbox, ...checkboxes];
+            sourceArray.forEach(cb => {
+                if (!cb) return;
+                const wrapper = document.createElement('label');
+                wrapper.className = 'filter-type-item';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = cb.value || 'Todos';
+                checkbox.checked = cb.checked;
+                checkbox.addEventListener('change', function(e) {
+                    cb.checked = checkbox.checked;
+                    if (cb === allCheckbox) {
+                        Array.from(checkboxes).forEach(typeCb => typeCb.checked = checkbox.checked);
+                    }
+                    updateFilterTypeSummary();
+                });
+                const text = document.createElement('span');
+                text.textContent = cb === allCheckbox ? 'Todos' : cb.value;
+                wrapper.appendChild(text);
+                wrapper.appendChild(checkbox);
+                list.appendChild(wrapper);
+            });
+        }
+
+        function getAllIngredientNames() {
+            const names = new Set();
+            recipes.forEach(recipe => {
+                (recipe.ingredients || []).forEach(ing => {
+                    if (ing && ing.name) {
+                        names.add(ing.name.trim());
+                    }
+                });
+            });
+            return Array.from(names).filter(Boolean).sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+        }
+
+        function refreshIngredientSuggestions() {
+            const datalist = document.getElementById('ingredientNameSuggestions');
+            if (!datalist) return;
+            const names = getAllIngredientNames();
+            datalist.innerHTML = names.map(name => `<option value="${name}"></option>`).join('');
+            document.querySelectorAll('.ingredient-name').forEach(input => {
+                input.setAttribute('list', 'ingredientNameSuggestions');
+            });
         }
 
         const RECIPE_TYPE_OPTIONS = [
@@ -1313,7 +2633,7 @@
             if (recipes.length === 0 && ENABLE_SAMPLE_DATA) {
                 recipes = sampleRecetas.map(normalizeRecipe);
                 if (!USE_FIREBASE || !db) {
-                    await saveRecipes();
+                await saveRecipes();
                 } else {
                     console.warn('⚠️ Datos de ejemplo disponibles pero no se insertan porque Firebase está habilitado.');
                 }
@@ -1525,7 +2845,131 @@
                     addTag();
                 }
             });
+
+            const tagsField = document.getElementById('filterTagsField');
+            if (tagsField) {
+                tagsField.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('chip-remove') || e.target.classList.contains('chips-dropdown-toggle')) {
+                        return;
+                    }
+                    openChipsModal('tags');
+                });
+                tagsField.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openChipsModal('tags');
+                    }
+                });
+                const tagsArrow = document.getElementById('filterTagsArrow');
+                if (tagsArrow) {
+                    tagsArrow.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        openChipsModal('tags');
+                    });
+                }
+            }
+
+            const ingredientsField = document.getElementById('filterIngredientsField');
+            if (ingredientsField) {
+                ingredientsField.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('chip-remove') || e.target.classList.contains('chips-dropdown-toggle')) {
+                        return;
+                    }
+                    openChipsModal('ingredients');
+                });
+                ingredientsField.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openChipsModal('ingredients');
+                    }
+                });
+                const ingredientsArrow = document.getElementById('filterIngredientsArrow');
+                if (ingredientsArrow) {
+                    ingredientsArrow.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        openChipsModal('ingredients');
+                    });
+                }
+            }
+
+            const dropdown = document.getElementById('filterTypeDropdown');
+            if (dropdown) {
+                const toggle = dropdown.querySelector('.filter-dropdown-toggle');
+                const menu = dropdown.querySelector('.filter-dropdown-menu');
+                toggle.addEventListener('click', function() {
+                    dropdown.classList.toggle('open');
+                });
+
+                document.addEventListener('click', function(e) {
+                    if (!dropdown.contains(e.target)) {
+                        dropdown.classList.remove('open');
+                    }
+                });
+
+                const allCheckbox = document.getElementById('filterTypeAll');
+                const checkboxes = dropdown.querySelectorAll('.filter-type-checkbox');
+
+                allCheckbox.addEventListener('change', function() {
+                    const checked = allCheckbox.checked;
+                    checkboxes.forEach(cb => {
+                        cb.checked = checked;
+                    });
+                    updateFilterTypeSummary();
+                });
+
+                checkboxes.forEach(cb => {
+                    cb.addEventListener('change', updateFilterTypeSummary);
+                });
+
+                updateFilterTypeSummary();
+            }
+
+            const aiRecipeForm = document.getElementById('aiRecipeForm');
+            if (aiRecipeForm) {
+                aiRecipeForm.addEventListener('submit', handleAiRecipeSubmit);
+            }
+
+            const aiModalElement = document.getElementById('aiRecipeModal');
+            if (aiModalElement) {
+                aiModalElement.addEventListener('click', function(e) {
+                    if (e.target === aiModalElement) {
+                        closeAiRecipeModal(false);
+                    }
+                });
+            }
+
+            const aiModalCloseBtn = document.getElementById('aiModalCloseBtn');
+            if (aiModalCloseBtn) {
+                aiModalCloseBtn.addEventListener('click', () => closeAiRecipeModal(false));
+            }
+
+            const aiModalCancelBtn = document.getElementById('aiModalCancelBtn');
+            if (aiModalCancelBtn) {
+                aiModalCancelBtn.addEventListener('click', () => closeAiRecipeModal(false));
+            }
+
+            const aiModalResetBtn = document.getElementById('aiModalResetBtn');
+            if (aiModalResetBtn) {
+                aiModalResetBtn.addEventListener('click', resetAiRecipeModal);
+            }
+
+            const aiModalSaveBtn = document.getElementById('aiModalSaveBtn');
+            if (aiModalSaveBtn) {
+                aiModalSaveBtn.addEventListener('click', function() {
+                    if (!lastAiRecipeData) {
+                        alert('Genera una receta con la IA antes de guardarla.');
+                        return;
+                    }
+                    applyAiRecipeToForm(lastAiRecipeData);
+                });
+            }
+
+            renderFilterTags();
+            renderFilterIngredients();
+            updateFilterTypeList();
         }
+
+    window.openAiRecipeModal = openAiRecipeModal;
 
         let currentImageData = null;
 
@@ -1768,7 +3212,7 @@
             const div = document.createElement('div');
             div.className = 'ingredient-item';
             div.innerHTML = `
-                <input type="text" placeholder="Ingrediente" class="ingredient-name">
+                <input type="text" placeholder="Ingrediente" class="ingredient-name" list="ingredientNameSuggestions">
                 <div class="ingredient-quantity-container">
                     <input type="number" placeholder="Cantidad" class="ingredient-quantity" step="0.01" min="0">
                     <select class="ingredient-unit">
@@ -1793,6 +3237,10 @@
                 <button type="button" class="btn btn-small btn-secondary" onclick="removeIngredient(this)">-</button>
             `;
             container.appendChild(div);
+            const ingredientInput = div.querySelector('.ingredient-name');
+            if (ingredientInput) {
+                ingredientInput.setAttribute('list', 'ingredientNameSuggestions');
+            }
         }
 
         function removeIngredient(button) {
@@ -1825,6 +3273,7 @@
             if (filteredRecipes.length === 0) {
                 grid.innerHTML = '';
                 document.getElementById('noResults').classList.remove('hidden');
+                refreshIngredientSuggestions();
                 return;
             }
             
@@ -1858,37 +3307,69 @@
                 </div>
             `;
             }).join('');
+
+            refreshIngredientSuggestions();
         }
 
         function filterRecipes() {
             return recipes.filter(recipe => {
                 const recipeTypes = getRecipeTypes(recipe);
-                if (currentFilters.type && !recipeTypes.includes(currentFilters.type)) return false;
-                if (currentFilters.tags) {
-                    const filterTags = currentFilters.tags.toLowerCase().split(',').map(t => t.trim());
-                    const recipeTags = (Array.isArray(recipe.tags) ? recipe.tags : []).map(t => t.toLowerCase());
-                    if (!filterTags.some(tag => recipeTags.includes(tag))) return false;
+                if (currentFilters.types.length > 0) {
+                    const matchesType = currentFilters.types.some(type => recipeTypes.includes(type));
+                    if (!matchesType) return false;
                 }
-                if (currentFilters.ingredient) {
-                    const ingredient = currentFilters.ingredient.toLowerCase();
-                    if (!recipe.ingredients.some(ing => ing.name.toLowerCase().includes(ingredient))) return false;
+
+                const recipeTags = (Array.isArray(recipe.tags) ? recipe.tags : []).map(tag => tag.toLowerCase());
+                if (currentFilters.tags.length > 0) {
+                    const allTagsMatch = currentFilters.tags.every(tag =>
+                        recipeTags.includes(tag.toLowerCase())
+                    );
+                    if (!allTagsMatch) return false;
                 }
+
+                if (currentFilters.ingredients.length > 0) {
+                    const recipeIngredientNames = recipe.ingredients.map(ing => (ing.name || '').toLowerCase());
+                    const allIngredientsMatch = currentFilters.ingredients.every(ingredient => {
+                        const lookup = ingredient.toLowerCase();
+                        return recipeIngredientNames.some(name => name.includes(lookup));
+                    });
+                    if (!allIngredientsMatch) return false;
+                }
+
                 return true;
             });
         }
 
         function applyFilters() {
-            currentFilters.type = document.getElementById('filterType').value;
-            currentFilters.tags = document.getElementById('filterTags').value;
-            currentFilters.ingredient = document.getElementById('filterIngredient').value;
+            const { allCheckbox, checkboxes } = getFilterTypeElements();
+            const selectedTypes = Array.from(checkboxes || []).filter(cb => cb.checked).map(cb => cb.value);
+            const shouldTreatAsAll = !checkboxes || selectedTypes.length === 0 || (allCheckbox && allCheckbox.checked) || selectedTypes.length === (checkboxes ? checkboxes.length : 0);
+            currentFilters.types = shouldTreatAsAll ? [] : selectedTypes;
+            currentFilters.tags = [...filterTagChips];
+            currentFilters.ingredients = [...filterIngredientChips];
+            if (allCheckbox) {
+                allCheckbox.checked = shouldTreatAsAll;
+            }
+            if (checkboxes) {
+                checkboxes.forEach(cb => {
+                    cb.checked = shouldTreatAsAll ? false : currentFilters.types.includes(cb.value);
+                });
+            }
+            updateFilterTypeSummary();
+            const { dropdown } = getFilterTypeElements();
+            if (dropdown) dropdown.classList.remove('open');
             renderRecipes();
         }
 
         function clearFilters() {
-            document.getElementById('filterType').value = '';
-            document.getElementById('filterTags').value = '';
-            document.getElementById('filterIngredient').value = '';
-            currentFilters = { type: '', tags: '', ingredient: '' };
+            setFilterTypesFromArray([]);
+            filterTagChips = [];
+            filterIngredientChips = [];
+            renderFilterTags();
+            renderFilterIngredients();
+            currentFilters = { types: [], tags: [], ingredients: [] };
+            const { dropdown } = getFilterTypeElements();
+            if (dropdown) dropdown.classList.remove('open');
             renderRecipes();
         }
 
@@ -2043,7 +3524,7 @@
                 const div = document.createElement('div');
                 div.className = 'ingredient-item';
                 div.innerHTML = `
-                    <input type="text" placeholder="Ingrediente" class="ingredient-name" value="${ing.name}">
+                    <input type="text" placeholder="Ingrediente" class="ingredient-name" list="ingredientNameSuggestions" value="${ing.name}">
                     <div class="ingredient-quantity-container">
                         <input type="number" placeholder="Cantidad" class="ingredient-quantity" step="0.01" min="0" value="${quantity}">
                         <select class="ingredient-unit">
@@ -2131,11 +3612,11 @@
             showLoading('Eliminando receta...');
             let success = false;
             try {
-                await deleteRecipeFromStorage(id);
-                renderRecipes();
-                
+            await deleteRecipeFromStorage(id);
+            renderRecipes();
+            
                 if (detailWasOpen && parseInt(document.getElementById('detailRecipeId').value) === id) {
-                    closeDetail();
+                closeDetail();
                 }
                 success = true;
             } catch (error) {
@@ -2146,7 +3627,7 @@
             }
 
             if (success) {
-                alert('Receta eliminada exitosamente!');
+            alert('Receta eliminada exitosamente!');
             }
         }
 
