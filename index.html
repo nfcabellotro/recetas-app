@@ -1240,6 +1240,84 @@
             font-size: 26px;
         }
 
+        .login-subtitle {
+            text-align: center;
+            color: var(--color-text-secondary);
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .auth-providers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn-auth {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border: 1.5px solid #E2E8E5;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--color-bg);
+            color: var(--color-text);
+            width: 100%;
+        }
+
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-google {
+            border-color: #4285F4;
+        }
+
+        .btn-google:hover {
+            background: rgba(66, 133, 244, 0.05);
+            border-color: #4285F4;
+        }
+
+        .btn-apple {
+            border-color: #000000;
+        }
+
+        .btn-apple:hover {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: #000000;
+        }
+
+        .btn-auth svg {
+            flex-shrink: 0;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 24px 0;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #E2E8E5;
+        }
+
+        .auth-divider span {
+            padding: 0 12px;
+        }
+
         .login-error {
             color: #dc3545;
             font-size: 14px;
@@ -1256,7 +1334,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
+            z-index: 20000;
             overflow-y: auto;
             padding: 20px;
         }
@@ -1438,18 +1516,71 @@
     <!-- Login Modal -->
     <div id="loginModal" class="login-modal">
         <div class="login-box">
-            <h2>🔐 Iniciar Sesión</h2>
-            <form id="loginForm">
+            <h2>🔐 Bienvenido a Kali.AI</h2>
+            <p class="login-subtitle">Inicia sesión para comenzar</p>
+            
+            <div class="auth-providers">
+                <button type="button" class="btn-auth btn-google" id="googleSignInBtn">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+                        <path d="M9 18c2.43 0 4.467-.806 5.965-2.18l-2.908-2.258c-.806.54-1.837.86-3.057.86-2.35 0-4.34-1.587-5.053-3.72H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+                        <path d="M3.943 10.712c-.18-.54-.282-1.117-.282-1.712s.102-1.172.282-1.712V4.956H.957C.348 6.175 0 7.55 0 9s.348 2.825.957 4.044l2.986-2.332z" fill="#FBBC05"/>
+                        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.956L3.943 7.288C4.656 5.153 6.646 3.58 9 3.58z" fill="#EA4335"/>
+                    </svg>
+                    Continuar con Google
+                </button>
+            </div>
+            
+            <div class="auth-divider">
+                <span>o</span>
+            </div>
+            
+            <form id="emailAuthForm">
                 <div class="form-group">
-                    <label for="loginUsername">Usuario</label>
-                    <input type="text" id="loginUsername" required autocomplete="username">
+                    <label for="loginEmail">Correo electrónico</label>
+                    <input type="email" id="loginEmail" required autocomplete="email" placeholder="tu@email.com">
                 </div>
                 <div class="form-group">
                     <label for="loginPassword">Contraseña</label>
-                    <input type="password" id="loginPassword" required autocomplete="current-password">
+                    <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="Mínimo 6 caracteres">
                 </div>
                 <div id="loginError" class="login-error hidden"></div>
-                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-primary" id="emailSignInBtn">Iniciar Sesión</button>
+                <button type="button" class="btn btn-secondary btn-small" id="emailSignUpBtn" style="margin-top: 10px; width: 100%;">Crear cuenta nueva</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- User Data Modal (aparece después del primer login) -->
+    <div id="userDataModal" class="recipe-modal hidden">
+        <div class="recipe-modal-content" style="max-width: 500px;">
+            <div class="recipe-modal-header">
+                <h2>Completa tu perfil</h2>
+                <button class="close-modal" onclick="closeUserDataModal()">×</button>
+            </div>
+            <form id="userDataForm">
+                <div class="form-group">
+                    <label for="userName">Nombre completo</label>
+                    <input type="text" id="userName" required placeholder="Ej: Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="userAge">Edad</label>
+                    <input type="number" id="userAge" required min="1" max="120" placeholder="Ej: 28">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="userWeight">Peso (kg)</label>
+                        <input type="number" id="userWeight" required min="1" max="300" step="0.1" placeholder="Ej: 75.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="userHeight">Estatura (cm)</label>
+                        <input type="number" id="userHeight" required min="50" max="250" placeholder="Ej: 175">
+                    </div>
+                </div>
+                <div id="userDataError" class="login-error hidden"></div>
+                <div class="edit-buttons">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
             </form>
         </div>
     </div>
@@ -1660,6 +1791,16 @@
                             <input type="number" id="recipeServings" placeholder="ej: 4" min="1">
                         </div>
 
+                        <div class="form-group" id="recipeVisibilityGroup" style="display: none;">
+                            <label>
+                                <input type="checkbox" id="recipeIsPublic" style="width: auto; margin-right: 8px;">
+                                Hacer receta pública (visible para todos los usuarios)
+                            </label>
+                            <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 6px;">
+                                Si no está marcado, la receta solo será visible para ti.
+                            </p>
+                        </div>
+
                         <div class="form-group">
                             <label for="recipeImage">Foto de la Receta</label>
                             <input type="file" id="recipeImage" accept="image/*" onchange="handleImageUpload(event)">
@@ -1811,6 +1952,7 @@
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
     <script>
         // ============================================
@@ -1838,10 +1980,12 @@
 
         // Inicializar Firebase si está habilitado
         let db = null;
+        let auth = null;
         if (USE_FIREBASE) {
             try {
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
+                auth = firebase.auth();
                 console.log('🔥 Firebase inicializado correctamente');
             } catch (error) {
                 console.error('❌ Error al inicializar Firebase:', error);
@@ -1873,7 +2017,15 @@
         };
         let editingRecipeId = null;
         let currentUserName = '';
+        let currentUser = null;
         let loadingCount = 0;
+        const ADMIN_EMAIL = 'nfcabello@uc.cl';
+
+        // Función para verificar si el usuario actual es admin
+        function isAdmin() {
+            if (!currentUser) return false;
+            return currentUser.email === ADMIN_EMAIL;
+        }
         let filterTagChips = [];
         let filterIngredientChips = [];
         let activeChipsModal = null;
@@ -2540,7 +2692,9 @@
                 type: types[0] || '',
                 tags: Array.isArray(recipe.tags) ? recipe.tags : [],
                 ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [],
-                steps: Array.isArray(recipe.steps) ? recipe.steps : []
+                steps: Array.isArray(recipe.steps) ? recipe.steps : [],
+                userId: recipe.userId || null, // Mantener userId si existe
+                isPublic: recipe.isPublic === true // Asegurar que isPublic sea boolean
             };
         }
 
@@ -2609,15 +2763,28 @@
         async function loadRecipes() {
             showLoading('Cargando recetas...');
             try {
-            if (USE_FIREBASE && db) {
+            if (USE_FIREBASE && db && currentUser) {
                 try {
                     const snapshot = await db.collection('recipes').get();
-                    recipes = snapshot.docs.map(doc => {
+                    let allRecipes = snapshot.docs.map(doc => {
                         const data = doc.data();
                         // Asegurar que el ID sea un número si es posible, sino mantener el string
                         const id = isNaN(doc.id) ? doc.id : parseInt(doc.id);
                             return normalizeRecipe({ ...data, id: id });
                     });
+                    
+                    // Filtrar recetas según el rol del usuario
+                    if (isAdmin()) {
+                        // Admin: ve todas sus recetas + todas las públicas
+                        recipes = allRecipes.filter(recipe => 
+                            recipe.userId === currentUser.uid || recipe.isPublic === true
+                        );
+                    } else {
+                        // Usuario normal: solo sus recetas + todas las públicas
+                        recipes = allRecipes.filter(recipe => 
+                            recipe.userId === currentUser.uid || recipe.isPublic === true
+                        );
+                    }
                     console.log('✅ Recetas cargadas desde Firebase:', recipes.length);
                 } catch (error) {
                     console.error('❌ Error al cargar recetas desde Firebase:', error);
@@ -2670,7 +2837,21 @@
         }
 
         async function addRecipe(recipe) {
-            const normalizedRecipe = normalizeRecipe(recipe);
+            if (!currentUser) {
+                console.error('❌ No hay usuario autenticado');
+                return;
+            }
+            
+            // Agregar información del usuario y visibilidad
+            const recipeWithUser = {
+                ...recipe,
+                userId: currentUser.uid,
+                isPublic: isAdmin() ? (recipe.isPublic || false) : false, // Solo admin puede hacer públicas
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            const normalizedRecipe = normalizeRecipe(recipeWithUser);
             recipes.push(normalizedRecipe);
             if (USE_FIREBASE && db) {
                 try {
@@ -2691,9 +2872,29 @@
         }
 
         async function updateRecipe(recipeId, updatedRecipe) {
+            if (!currentUser) {
+                console.error('❌ No hay usuario autenticado');
+                return;
+            }
+            
             const index = recipes.findIndex(r => r.id === recipeId);
             if (index !== -1) {
-                const normalizedRecipe = normalizeRecipe(updatedRecipe);
+                // Verificar que el usuario sea el dueño de la receta o sea admin
+                const existingRecipe = recipes[index];
+                if (existingRecipe.userId !== currentUser.uid && !isAdmin()) {
+                    alert('No tienes permiso para editar esta receta');
+                    return;
+                }
+                
+                // Actualizar información de visibilidad (solo admin puede cambiar)
+                const recipeWithUser = {
+                    ...updatedRecipe,
+                    userId: existingRecipe.userId || currentUser.uid, // Mantener el userId original
+                    isPublic: isAdmin() ? (updatedRecipe.isPublic || false) : (existingRecipe.isPublic || false),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                const normalizedRecipe = normalizeRecipe(recipeWithUser);
                 recipes[index] = normalizedRecipe;
                 
                 if (USE_FIREBASE && db) {
@@ -2716,8 +2917,19 @@
         }
 
         async function deleteRecipeFromStorage(recipeId) {
+            if (!currentUser) {
+                console.error('❌ No hay usuario autenticado');
+                return;
+            }
+            
             const index = recipes.findIndex(r => r.id === recipeId);
             if (index !== -1) {
+                // Verificar que el usuario sea el dueño de la receta o sea admin
+                const recipe = recipes[index];
+                if (recipe.userId !== currentUser.uid && !isAdmin()) {
+                    throw new Error('No tienes permiso para eliminar esta receta');
+                }
+                
                 recipes.splice(index, 1);
                 
                 if (USE_FIREBASE && db) {
@@ -2739,24 +2951,70 @@
         }
 
         // ============================================
-        // LOGIN FUNCTIONS
+        // AUTHENTICATION FUNCTIONS
         // ============================================
-        const ADMIN_PASS = 'admin';
 
         function updateHeaderUser() {
             const display = document.getElementById('currentUserDisplay');
             if (display) {
-                display.textContent = currentUserName ? currentUserName : 'Usuario';
+                display.textContent = currentUserName || 'Usuario';
             }
         }
 
         async function checkLogin() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-            if (isLoggedIn) {
-                currentUserName = localStorage.getItem('loggedInUser') || '';
-                await showApp();
-            } else {
+            if (!auth) {
                 showLogin();
+                return;
+            }
+            
+            // Escuchar cambios en el estado de autenticación
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadUserData();
+                    await checkUserProfile();
+                } else {
+                    showLogin();
+                }
+            });
+        }
+
+        async function loadUserData() {
+            if (!currentUser || !db) return;
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    currentUserName = userData.name || currentUser.displayName || currentUser.email || 'Usuario';
+                } else {
+                    currentUserName = currentUser.displayName || currentUser.email || 'Usuario';
+                }
+                updateHeaderUser();
+            } catch (error) {
+                console.error('Error cargando datos del usuario:', error);
+                currentUserName = currentUser.displayName || currentUser.email || 'Usuario';
+                updateHeaderUser();
+            }
+        }
+
+        async function checkUserProfile() {
+            if (!currentUser || !db) {
+                await showApp();
+                return;
+            }
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (!userDoc.exists || !userDoc.data().name) {
+                    // Usuario nuevo o sin perfil completo, mostrar modal
+                    showUserDataModal();
+                } else {
+                    await showApp();
+                }
+            } catch (error) {
+                console.error('Error verificando perfil:', error);
+                await showApp();
             }
         }
 
@@ -2768,46 +3026,246 @@
         async function showApp() {
             document.getElementById('loginModal').classList.add('hidden');
             document.getElementById('appContent').classList.remove('hidden');
-            if (!currentUserName) {
-                currentUserName = localStorage.getItem('loggedInUser') || '';
-            }
             updateHeaderUser();
             await loadRecipes();
         }
 
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('loggedInUser');
+        async function logout() {
+            if (auth) {
+                try {
+                    await auth.signOut();
+                } catch (error) {
+                    console.error('Error al cerrar sesión:', error);
+                }
+            }
+            currentUser = null;
             currentUserName = '';
             showLogin();
             updateHeaderUser();
         }
 
-        // Login form handler
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            const errorDiv = document.getElementById('loginError');
-
-            const trimmedUsername = username.trim();
-            if (!trimmedUsername) {
-                errorDiv.textContent = 'Ingresa un nombre de usuario';
-                errorDiv.classList.remove('hidden');
+        // Google Sign In
+        async function signInWithGoogle() {
+            if (!auth) {
+                showError('Firebase no está configurado');
                 return;
             }
+            
+            const provider = new firebase.auth.GoogleAuthProvider();
+            const errorDiv = document.getElementById('loginError');
+            
+            try {
+                showLoading('Iniciando sesión con Google...');
+                const result = await auth.signInWithPopup(provider);
+                currentUser = result.user;
+                hideLoading();
+            } catch (error) {
+                hideLoading();
+                console.error('Error en Google Sign In:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = error.message || 'Error al iniciar sesión con Google';
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+        }
 
-            if (password === ADMIN_PASS) {
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('loggedInUser', trimmedUsername);
-                currentUserName = trimmedUsername;
-                errorDiv.classList.add('hidden');
-                showApp();
+
+        // Email Sign In / Sign Up
+        async function handleEmailAuth(isSignUp = false) {
+            if (!auth) {
+                showError('Firebase no está configurado');
+                return;
+            }
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (!email || !password) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Completa todos los campos';
+                    errorDiv.classList.remove('hidden');
+                }
+                return;
+            }
+            
+            if (password.length < 6) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'La contraseña debe tener al menos 6 caracteres';
+                    errorDiv.classList.remove('hidden');
+                }
+                return;
+            }
+            
+            try {
+                showLoading(isSignUp ? 'Creando cuenta...' : 'Iniciando sesión...');
+                
+                if (isSignUp) {
+                    await auth.createUserWithEmailAndPassword(email, password);
+                } else {
+                    await auth.signInWithEmailAndPassword(email, password);
+                }
+                
+                hideLoading();
+            } catch (error) {
+                hideLoading();
+                console.error('Error en Email Auth:', error);
+                if (errorDiv) {
+                    let errorMessage = 'Error al autenticar';
+                    if (error.code === 'auth/email-already-in-use') {
+                        errorMessage = 'Este correo ya está registrado';
+                    } else if (error.code === 'auth/user-not-found') {
+                        errorMessage = 'Usuario no encontrado';
+                    } else if (error.code === 'auth/wrong-password') {
+                        errorMessage = 'Contraseña incorrecta';
+                    } else if (error.code === 'auth/weak-password') {
+                        errorMessage = 'La contraseña es muy débil';
+                    } else if (error.code === 'auth/invalid-email') {
+                        errorMessage = 'Correo electrónico inválido';
+                    } else {
+                        errorMessage = error.message || 'Error al autenticar';
+                    }
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+        }
+
+        // User Data Modal Functions
+        function showUserDataModal() {
+            // Ocultar el modal de login primero
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.classList.add('hidden');
+            }
+            
+            const modal = document.getElementById('userDataModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Pre-llenar con datos disponibles del usuario
+                if (currentUser) {
+                    const nameInput = document.getElementById('userName');
+                    if (nameInput && currentUser.displayName) {
+                        nameInput.value = currentUser.displayName;
+                    }
+                }
+            }
+        }
+
+        function closeUserDataModal() {
+            const modal = document.getElementById('userDataModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        async function saveUserData() {
+            if (!currentUser || !db) {
+                showError('No hay usuario autenticado');
+                return;
+            }
+            
+            const name = document.getElementById('userName').value.trim();
+            const age = parseInt(document.getElementById('userAge').value);
+            const weight = parseFloat(document.getElementById('userWeight').value);
+            const height = parseInt(document.getElementById('userHeight').value);
+            const errorDiv = document.getElementById('userDataError');
+            
+            if (!name || !age || !weight || !height) {
+                if (errorDiv) {
+                    errorDiv.textContent = 'Completa todos los campos';
+                    errorDiv.classList.remove('hidden');
+                }
+                return;
+            }
+            
+            try {
+                showLoading('Guardando perfil...');
+                
+                const userData = {
+                    name: name,
+                    age: age,
+                    weight: weight,
+                    height: height,
+                    email: currentUser.email,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                await db.collection('users').doc(currentUser.uid).set(userData, { merge: true });
+                
+                currentUserName = name;
                 updateHeaderUser();
-            } else {
-                errorDiv.textContent = 'Contraseña incorrecta';
+                closeUserDataModal();
+                hideLoading();
+                await showApp();
+            } catch (error) {
+                hideLoading();
+                console.error('Error guardando datos del usuario:', error);
+                if (errorDiv) {
+                    errorDiv.textContent = 'Error al guardar los datos';
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('loginError');
+            if (errorDiv) {
+                errorDiv.textContent = message;
                 errorDiv.classList.remove('hidden');
             }
+        }
+
+        // Event Listeners para autenticación
+        document.addEventListener('DOMContentLoaded', function() {
+            // Botones de autenticación
+            const googleBtn = document.getElementById('googleSignInBtn');
+            if (googleBtn) {
+                googleBtn.addEventListener('click', signInWithGoogle);
+            }
+            
+            const emailForm = document.getElementById('emailAuthForm');
+            if (emailForm) {
+                emailForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    handleEmailAuth(false);
+                });
+            }
+            
+            const emailSignUpBtn = document.getElementById('emailSignUpBtn');
+            if (emailSignUpBtn) {
+                emailSignUpBtn.addEventListener('click', function() {
+                    handleEmailAuth(true);
+                });
+            }
+            
+            // Formulario de datos del usuario
+            const userDataForm = document.getElementById('userDataForm');
+            if (userDataForm) {
+                userDataForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveUserData();
+                });
+            }
+            
+            // Cerrar modal de datos al hacer clic fuera
+            const userDataModal = document.getElementById('userDataModal');
+            if (userDataModal) {
+                userDataModal.addEventListener('click', function(e) {
+                    if (e.target === userDataModal) {
+                        closeUserDataModal();
+                    }
+                });
+            }
+            
+            checkLogin();
+            setupEventListeners();
         });
 
         // ============================================
@@ -2816,6 +3274,17 @@
         function openRecipeModal() {
             resetForm();
             document.getElementById('modalTitle').textContent = 'Agregar Receta';
+            
+            // Mostrar/ocultar campo de visibilidad según el rol
+            const visibilityGroup = document.getElementById('recipeVisibilityGroup');
+            if (visibilityGroup) {
+                if (isAdmin()) {
+                    visibilityGroup.style.display = 'block';
+                } else {
+                    visibilityGroup.style.display = 'none';
+                }
+            }
+            
             document.getElementById('recipeModal').classList.add('active');
         }
 
@@ -3100,6 +3569,9 @@
 
             const isEditing = Boolean(editingRecipeId);
             const recipeId = editingRecipeId || Date.now();
+            const isPublicCheckbox = document.getElementById('recipeIsPublic');
+            const isPublic = isAdmin() && isPublicCheckbox ? isPublicCheckbox.checked : false;
+            
             const recipe = {
                 id: recipeId,
                 name,
@@ -3110,7 +3582,8 @@
                 steps,
                 calories,
                 servings,
-                image
+                image,
+                isPublic: isPublic
             };
 
             const detailWasOpen = document.getElementById('recipeDetail').classList.contains('active');
@@ -3161,6 +3634,10 @@
             const cancelEditButton = document.getElementById('cancelEditButton');
             if (cancelEditButton) {
                 cancelEditButton.classList.add('hidden');
+            }
+            const isPublicCheckbox = document.getElementById('recipeIsPublic');
+            if (isPublicCheckbox) {
+                isPublicCheckbox.checked = false;
             }
             currentImageData = null;
             editingRecipeId = null;
@@ -3378,6 +3855,18 @@
             if (!recipe) return;
 
             document.getElementById('detailRecipeId').value = id;
+            
+            // Mostrar/ocultar botones de editar/eliminar según permisos
+            const canEdit = currentUser && (recipe.userId === currentUser.uid || isAdmin());
+            const editButton = document.getElementById('editDetailButton');
+            const deleteButton = document.getElementById('deleteDetailButton');
+            
+            if (editButton) {
+                editButton.style.display = canEdit ? 'block' : 'none';
+            }
+            if (deleteButton) {
+                deleteButton.style.display = canEdit ? 'block' : 'none';
+            }
 
             // Imagen
             const imageContainer = document.getElementById('detailImageContainer');
@@ -3481,6 +3970,19 @@
             document.getElementById('recipeCalories').value = recipe.calories || '';
             document.getElementById('recipeServings').value = recipe.servings || '';
             document.getElementById('recipeImageUrl').value = recipe.image && !recipe.image.startsWith('data:') ? recipe.image : '';
+            
+            // Mostrar/ocultar y cargar campo de visibilidad según el rol
+            const visibilityGroup = document.getElementById('recipeVisibilityGroup');
+            const isPublicCheckbox = document.getElementById('recipeIsPublic');
+            if (visibilityGroup && isPublicCheckbox) {
+                if (isAdmin()) {
+                    visibilityGroup.style.display = 'block';
+                    isPublicCheckbox.checked = recipe.isPublic === true;
+                } else {
+                    visibilityGroup.style.display = 'none';
+                    isPublicCheckbox.checked = false;
+                }
+            }
 
             // Limpiar y agregar tags
             document.getElementById('tagsContainer').innerHTML = '';
