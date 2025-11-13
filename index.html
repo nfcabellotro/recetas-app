@@ -130,6 +130,484 @@
             margin-bottom: 18px;
         }
 
+        .form-group-with-ai {
+            position: relative;
+        }
+
+        .ai-calculate-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            z-index: 1;
+        }
+
+        .ai-calculate-btn:hover {
+            background: var(--color-secondary);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .ai-calculate-btn:disabled {
+            background: var(--color-text-secondary);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .form-group-with-ai input {
+            padding-right: 100px;
+        }
+
+        .macros-ai-btn {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 4px;
+            width: 100%;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .macros-ai-btn:hover {
+            background: var(--color-secondary);
+        }
+
+        .macros-ai-btn:disabled {
+            background: var(--color-text-secondary);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Calculadora Nutricional */
+        .goal-btn {
+            background: var(--color-bg);
+            border: 2px solid rgba(0, 200, 150, 0.2);
+            border-radius: 12px;
+            padding: 20px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: var(--color-text);
+            font-size: 14px;
+        }
+
+        .goal-btn:hover {
+            border-color: var(--color-primary);
+            background: rgba(0, 200, 150, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.15);
+        }
+
+        .goal-btn.selected {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, rgba(0, 200, 150, 0.1) 0%, rgba(168, 224, 99, 0.1) 100%);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.2);
+        }
+
+        .nutrition-results {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nutrition-result-card {
+            background: linear-gradient(135deg, rgba(0, 200, 150, 0.05) 0%, rgba(168, 224, 99, 0.05) 100%);
+            border: 1px solid rgba(0, 200, 150, 0.15);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .nutrition-result-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .nutrition-result-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+
+        .goal-information {
+            line-height: 1.8;
+        }
+
+        .goal-information h4 {
+            color: var(--color-text);
+            margin-top: 24px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .goal-information p {
+            color: var(--color-text);
+            margin-bottom: 16px;
+        }
+
+        .goal-information ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .goal-information li {
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .goal-information table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        .goal-information table th,
+        .goal-information table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 200, 150, 0.15);
+        }
+
+        .goal-information table th {
+            background: rgba(0, 200, 150, 0.1);
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        /* Opciones específicas de objetivo */
+        .goal-options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .goal-option-btn {
+            background: var(--color-bg);
+            border: 2px solid rgba(0, 200, 150, 0.2);
+            border-radius: 12px;
+            padding: 20px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: var(--color-text);
+            font-size: 14px;
+        }
+
+        .goal-option-btn:hover {
+            border-color: var(--color-primary);
+            background: rgba(0, 200, 150, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.15);
+        }
+
+        .goal-option-btn.selected {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, rgba(0, 200, 150, 0.1) 0%, rgba(168, 224, 99, 0.1) 100%);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.2);
+        }
+
+        .goal-option-btn strong {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--color-primary);
+        }
+
+        .goal-option-btn .option-desc {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+        }
+
+        /* Planificación Semanal */
+        .planning-section {
+            transition: opacity 0.3s ease;
+        }
+
+        .planning-section.hidden {
+            display: none;
+        }
+
+        .food-category {
+            margin-bottom: 30px;
+        }
+
+        .food-category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .food-category-title {
+            color: var(--color-text);
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .food-category-instruction {
+            color: var(--color-text-secondary);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .select-all-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 200, 150, 0.3);
+            color: var(--color-primary);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .select-all-btn:hover {
+            background: rgba(0, 200, 150, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .food-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .food-item-btn {
+            background: var(--color-bg);
+            border: 2px solid rgba(0, 200, 150, 0.2);
+            border-radius: 12px;
+            padding: 16px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: var(--color-text);
+            font-size: 13px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-height: 100px;
+        }
+
+        .food-item-btn:hover {
+            border-color: var(--color-primary);
+            background: rgba(0, 200, 150, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.15);
+        }
+
+        .food-item-btn.selected {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, rgba(0, 200, 150, 0.1) 0%, rgba(168, 224, 99, 0.1) 100%);
+            box-shadow: 0 4px 12px rgba(0, 200, 150, 0.2);
+        }
+
+        .food-item-btn .food-icon {
+            font-size: 32px;
+            line-height: 1;
+        }
+
+        .food-item-btn .food-name {
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        /* Checkboxes de tipos de comidas */
+        .meal-type-checkbox {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: var(--color-bg);
+            border: 2px solid rgba(0, 200, 150, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            color: var(--color-text);
+        }
+
+        .meal-type-checkbox:hover {
+            border-color: var(--color-primary);
+            background: rgba(0, 200, 150, 0.05);
+        }
+
+        .meal-type-checkbox input[type="checkbox"] {
+            width: auto;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .meal-type-checkbox input[type="checkbox"]:checked + span {
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .meal-type-checkbox:has(input[type="checkbox"]:checked) {
+            border-color: var(--color-primary);
+            background: linear-gradient(135deg, rgba(0, 200, 150, 0.1) 0%, rgba(168, 224, 99, 0.1) 100%);
+        }
+
+        /* Plan generado */
+        .weekly-plan {
+            display: grid;
+            gap: 20px;
+        }
+
+        .day-plan {
+            background: rgba(0, 200, 150, 0.05);
+            border: 1px solid rgba(0, 200, 150, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .day-plan-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0, 200, 150, 0.2);
+        }
+
+        .meal-item {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: var(--color-bg);
+            border-radius: 8px;
+        }
+
+        .meal-item-title {
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 8px;
+        }
+
+        .meal-item-content {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Botón de información */
+        .info-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 200, 150, 0.3);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--color-primary);
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 8px;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+        }
+
+        .info-btn:hover {
+            background: rgba(0, 200, 150, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        /* Tooltip/Modal de información */
+        .info-tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .info-tooltip-content {
+            display: none;
+            position: absolute;
+            background: var(--color-bg);
+            border: 2px solid rgba(0, 200, 150, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            max-width: 500px;
+            max-height: 400px;
+            overflow-y: auto;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 1.6;
+            white-space: normal;
+        }
+
+        .info-tooltip-content.show {
+            display: block;
+        }
+
+        .info-tooltip-content h4 {
+            color: var(--color-text);
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .info-tooltip-content p {
+            color: var(--color-text);
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .info-tooltip-content ul {
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .info-tooltip-content li {
+            color: var(--color-text);
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .info-tooltip-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 12px;
+        }
+
+        .info-tooltip-content table th,
+        .info-tooltip-content table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 200, 150, 0.15);
+        }
+
+        .info-tooltip-content table th {
+            background: rgba(0, 200, 150, 0.1);
+            font-weight: 600;
+        }
+
         label {
             display: block;
             margin-bottom: 6px;
@@ -1029,6 +1507,108 @@
             color: var(--color-primary);
         }
 
+        /* Sección separada de macronutrientes */
+        .recipe-macros-section {
+            margin: 24px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(0, 200, 150, 0.05) 0%, rgba(168, 224, 99, 0.05) 100%);
+            border-radius: 16px;
+            border: 2px solid rgba(0, 200, 150, 0.15);
+        }
+
+        .recipe-macros-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .recipe-macros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+        }
+
+        .recipe-macro-item {
+            background: var(--color-bg);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(0, 200, 150, 0.1);
+        }
+
+        .recipe-macro-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 200, 150, 0.15);
+        }
+
+        .recipe-macro-icon {
+            font-size: 32px;
+            line-height: 1;
+        }
+
+        .recipe-macro-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .recipe-macro-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+
+        /* Macros en preview de recetas */
+        .recipe-card-macros {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 2px solid rgba(0, 200, 150, 0.12);
+        }
+
+        .recipe-card-macros-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .recipe-card-macro-item {
+            background: rgba(0, 200, 150, 0.08);
+            border-radius: 10px;
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid rgba(0, 200, 150, 0.15);
+        }
+
+        .recipe-card-macro-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .recipe-card-macro-label {
+            font-size: 10px;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        .recipe-card-macro-value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-primary);
+            line-height: 1;
+        }
+
         .image-preview {
             width: 100%;
             max-height: 200px;
@@ -1386,6 +1966,66 @@
             background: #c82333;
         }
 
+        /* Tabs System */
+        .tabs-container {
+            background: var(--color-bg);
+            border-radius: 18px;
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid rgba(0, 200, 150, 0.1);
+            background: var(--color-bg-alt);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 18px 24px;
+            border: none;
+            background: transparent;
+            color: var(--color-text-secondary);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            background: rgba(0, 200, 150, 0.08);
+            color: var(--color-text);
+        }
+
+        .tab-button.active {
+            color: var(--color-primary);
+            background: var(--color-bg);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--color-primary);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         /* Filters Bar */
         .filters-bar {
             background: var(--color-bg);
@@ -1604,6 +2244,17 @@
                 </div>
             </header>
 
+            <!-- Tabs System -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-button active" onclick="switchTab('recipes')" id="tabRecipes">Recetas</button>
+                    <button class="tab-button" onclick="switchTab('planning')" id="tabPlanning">Planificación Semanal</button>
+                    <button class="tab-button" onclick="switchTab('calculator')" id="tabCalculator">Calculadora Nutricional</button>
+                    <button class="tab-button" onclick="switchTab('blog')" id="tabBlog">Blog</button>
+                </div>
+
+                <!-- Tab: Recetas -->
+                <div id="tabContentRecipes" class="tab-content active">
             <!-- Filters Bar -->
             <div class="filters-bar">
                 <div class="filter-group">
@@ -1722,6 +2373,291 @@
             </div>
         </div>
 
+                <!-- Tab: Planificación Semanal -->
+                <div id="tabContentPlanning" class="tab-content">
+                    <div class="content-area-full">
+                        <div style="max-width: 900px; margin: 0 auto; padding: 30px 20px;">
+                            <h2 style="color: var(--color-text); margin-bottom: 24px; text-align: center;">📅 Planificación Semanal</h2>
+                            
+                            <!-- Sección 1: Objetivos Nutricionales -->
+                            <div id="planningSection1" class="planning-section">
+                                <div style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                    <h3 style="color: var(--color-text); margin-bottom: 20px; font-size: 18px;">🎯 Objetivos Nutricionales Diarios</h3>
+                                    
+                                    <div class="form-group" style="margin-bottom: 20px;">
+                                        <label for="planningCalories">Calorías (kcal/día) *</label>
+                                        <input type="number" id="planningCalories" placeholder="ej: 2000" min="0" required style="width: 100%;">
+                                    </div>
+                                    
+                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px;">
+                                        <div class="form-group">
+                                            <label for="planningProtein">💪 Proteínas (g)</label>
+                                            <input type="number" id="planningProtein" placeholder="ej: 150" min="0" step="0.1" style="width: 100%;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="planningCarbs">🍞 Carbohidratos (g)</label>
+                                            <input type="number" id="planningCarbs" placeholder="ej: 200" min="0" step="0.1" style="width: 100%;">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="planningFats">🥑 Grasas (g)</label>
+                                            <input type="number" id="planningFats" placeholder="ej: 65" min="0" step="0.1" style="width: 100%;">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Selector de objetivo si no se ingresan macros -->
+                                    <div id="planningGoalSelector" class="hidden" style="background: rgba(0, 200, 150, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(0, 200, 150, 0.2);">
+                                        <p style="color: var(--color-text); margin-bottom: 16px; font-weight: 500;">Selecciona tu objetivo para calcular los macronutrientes:</p>
+                                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                                            <button type="button" class="goal-btn" onclick="selectPlanningGoal('lose')" id="planningGoalLose">
+                                                <span style="font-size: 24px; display: block; margin-bottom: 8px;">📉</span>
+                                                <strong>Bajar Grasa</strong>
+                                            </button>
+                                            <button type="button" class="goal-btn" onclick="selectPlanningGoal('maintain')" id="planningGoalMaintain">
+                                                <span style="font-size: 24px; display: block; margin-bottom: 8px;">⚖️</span>
+                                                <strong>Mantener</strong>
+                                            </button>
+                                            <button type="button" class="goal-btn" onclick="selectPlanningGoal('gain')" id="planningGoalGain">
+                                                <span style="font-size: 24px; display: block; margin-bottom: 8px;">📈</span>
+                                                <strong>Subir Masa</strong>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="button" class="btn btn-primary" onclick="continueToFoodSelection()" style="width: 100%; margin-top: 10px;">
+                                        Continuar a Selección de Alimentos →
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Sección 2: Selección de Alimentos -->
+                            <div id="planningSection2" class="planning-section hidden">
+                                <div style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                        <h3 style="color: var(--color-text); font-size: 18px; margin: 0;">🍽️ Selecciona tus Alimentos Disponibles</h3>
+                                        <button type="button" class="btn btn-secondary" onclick="backToNutritionGoals()" style="padding: 8px 16px;">
+                                            ← Volver
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Categorías de Alimentos -->
+                                    <div id="planningFoodCategories"></div>
+                                    
+                                    <button type="button" class="btn btn-primary" onclick="continueToMealTypes()" style="width: 100%; margin-top: 30px;">
+                                        Continuar a Tipos de Comidas →
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Sección 3: Tipos de Comidas -->
+                            <div id="planningSection3" class="planning-section hidden">
+                                <div style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                        <h3 style="color: var(--color-text); font-size: 18px; margin: 0;">🍴 Selecciona los Tipos de Comidas</h3>
+                                        <button type="button" class="btn btn-secondary" onclick="backToFoodSelection()" style="padding: 8px 16px;">
+                                            ← Volver
+                                        </button>
+                                    </div>
+                                    
+                                    <p style="color: var(--color-text-secondary); margin-bottom: 20px;">
+                                        Selecciona los tipos de comidas que quieres incluir en tu plan semanal:
+                                    </p>
+                                    
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 30px;">
+                                        <label class="meal-type-checkbox">
+                                            <input type="checkbox" id="mealTypeBreakfast" value="Desayuno" checked>
+                                            <span>🌅 Desayuno</span>
+                                        </label>
+                                        <label class="meal-type-checkbox">
+                                            <input type="checkbox" id="mealTypeLunch" value="Almuerzo" checked>
+                                            <span>🍽️ Almuerzo</span>
+                                        </label>
+                                        <label class="meal-type-checkbox">
+                                            <input type="checkbox" id="mealTypeDinner" value="Cena" checked>
+                                            <span>🌙 Cena</span>
+                                        </label>
+                                        <label class="meal-type-checkbox">
+                                            <input type="checkbox" id="mealTypeSnack" value="Snack">
+                                            <span>🍎 Snack</span>
+                                        </label>
+                                        <label class="meal-type-checkbox">
+                                            <input type="checkbox" id="mealTypeDessert" value="Postre">
+                                            <span>🍰 Postre</span>
+                                        </label>
+                                        <label class="meal-type-checkbox">
+                                            <input type="checkbox" id="mealTypeDrink" value="Bebida">
+                                            <span>🥤 Bebida</span>
+                                        </label>
+                                    </div>
+                                    
+                                    <button type="button" class="btn btn-primary" onclick="generateMealPlan()" style="width: 100%;">
+                                        🎯 Generar Plan Semanal de Comidas
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Sección 4: Plan Generado -->
+                            <div id="planningSection4" class="planning-section hidden">
+                                <div style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                        <h3 style="color: var(--color-text); font-size: 18px; margin: 0;">📅 Tu Plan Semanal de Comidas</h3>
+                                        <button type="button" class="btn btn-secondary" onclick="backToMealTypes()" style="padding: 8px 16px;">
+                                            ← Volver
+                                        </button>
+                                    </div>
+                                    
+                                    <div id="planningGeneratedPlan" style="color: var(--color-text); margin-bottom: 24px;">
+                                        <!-- Aquí se mostrará el plan generado -->
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 12px; justify-content: center;">
+                                        <button type="button" class="btn btn-secondary" onclick="backToMealTypes()" style="padding: 12px 24px;">
+                                            ← Regenerar Plan
+                                        </button>
+                                        <button type="button" class="btn btn-primary" onclick="acceptPlanAndShowShoppingCart()" style="padding: 12px 24px;">
+                                            ✅ Aceptar Plan y Ver Carrito
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Sección 5: Carrito de Supermercado -->
+                            <div id="planningSection5" class="planning-section hidden">
+                                <div style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                                        <h3 style="color: var(--color-text); font-size: 18px; margin: 0;">🛒 Carrito de Supermercado</h3>
+                                        <button type="button" class="btn btn-secondary" onclick="backToGeneratedPlan()" style="padding: 8px 16px;">
+                                            ← Volver
+                                        </button>
+                                    </div>
+                                    
+                                    <p style="color: var(--color-text-secondary); margin-bottom: 20px;">
+                                        Aquí tienes la lista de ingredientes que necesitas comprar para cumplir con tu plan semanal:
+                                    </p>
+                                    
+                                    <div id="planningShoppingCart" style="color: var(--color-text);">
+                                        <!-- Aquí se mostrará el carrito de compras -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Calculadora Nutricional -->
+                <div id="tabContentCalculator" class="tab-content">
+                    <div class="content-area-full">
+                        <div style="max-width: 900px; margin: 0 auto; padding: 30px 20px;">
+                            <h2 style="color: var(--color-text); margin-bottom: 24px; text-align: center;">🧮 Calculadora Nutricional</h2>
+                            
+                            <!-- Mensaje de Advertencia -->
+                            <div class="nutrition-warning" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%); border-left: 4px solid #FF9800; padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+                                <div style="display: flex; align-items: start; gap: 12px;">
+                                    <span style="font-size: 24px;">⚠️</span>
+                                    <div>
+                                        <h3 style="color: #FF9800; margin-bottom: 8px; font-size: 16px; font-weight: 600;">Importante</h3>
+                                        <p style="color: var(--color-text); line-height: 1.6; margin: 0; font-size: 14px;">
+                                            Los resultados entregados por esta calculadora son referenciales y deben considerarse solo como un parámetro orientativo. Cada persona tiene necesidades únicas, por lo que se recomienda consultar a un médico o nutricionista para una evaluación individual y un plan adecuado a tu salud y objetivos.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Formulario de Datos -->
+                            <div class="nutrition-calculator-form" style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                <h3 style="color: var(--color-text); margin-bottom: 20px; font-size: 18px;">📊 Datos Personales</h3>
+                                
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                                    <div class="form-group">
+                                        <label for="calcWeight">Peso (kg)</label>
+                                        <input type="number" id="calcWeight" placeholder="ej: 70" min="0" step="0.1" style="width: 100%;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="calcHeight">Estatura (cm)</label>
+                                        <input type="number" id="calcHeight" placeholder="ej: 175" min="0" step="0.1" style="width: 100%;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="calcAge">Edad</label>
+                                        <input type="number" id="calcAge" placeholder="ej: 30" min="1" max="120" style="width: 100%;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="calcGender">Sexo</label>
+                                        <select id="calcGender" style="width: 100%;">
+                                            <option value="">Selecciona...</option>
+                                            <option value="male">Masculino</option>
+                                            <option value="female">Femenino</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label for="calcExercise">Nivel de Actividad Física</label>
+                                    <select id="calcExercise" style="width: 100%;">
+                                        <option value="">Selecciona tu nivel de ejercicio...</option>
+                                        <option value="sedentary">Sedentario (poco o ningún ejercicio)</option>
+                                        <option value="light">Ligera (ejercicio ligero 1-3 días/semana)</option>
+                                        <option value="moderate">Moderada (ejercicio moderado 3-5 días/semana)</option>
+                                        <option value="active">Activa (ejercicio intenso 6-7 días/semana)</option>
+                                        <option value="very_active">Muy activa (ejercicio muy intenso, trabajo físico)</option>
+                                    </select>
+                                </div>
+
+                                <button type="button" class="btn btn-primary" onclick="calculateNutrition()" style="width: 100%; margin-top: 10px;">
+                                    🧮 Calcular TDEE y TMB
+                                </button>
+                            </div>
+
+                            <!-- Resultados TMB y TDEE -->
+                            <div id="nutritionResults" class="nutrition-results hidden" style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                <h3 style="color: var(--color-text); margin-bottom: 20px; font-size: 18px;">📊 Resultados</h3>
+                                <div id="nutritionResultsContent" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;"></div>
+                            </div>
+
+                            <!-- Selector de Objetivo (después de calcular) -->
+                            <div id="goalSelector" class="goal-selector hidden" style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                <h3 style="color: var(--color-text); margin-bottom: 20px; font-size: 18px;">🎯 Selecciona tu Objetivo</h3>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px;">
+                                    <button type="button" class="goal-btn" onclick="selectGoal('gain')" id="goalGain">
+                                        <span style="font-size: 24px; display: block; margin-bottom: 8px;">📈</span>
+                                        <strong>Ganancia Muscular</strong>
+                                    </button>
+                                    <button type="button" class="goal-btn" onclick="selectGoal('maintain')" id="goalMaintain">
+                                        <span style="font-size: 24px; display: block; margin-bottom: 8px;">⚖️</span>
+                                        <strong>Mantener Peso</strong>
+                                    </button>
+                                    <button type="button" class="goal-btn" onclick="selectGoal('lose')" id="goalLose">
+                                        <span style="font-size: 24px; display: block; margin-bottom: 8px;">📉</span>
+                                        <strong>Pérdida de Peso</strong>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Opciones Específicas según Objetivo -->
+                            <div id="goalOptions" class="goal-options hidden" style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); margin-bottom: 30px;">
+                                <div id="goalOptionsContent"></div>
+                            </div>
+
+                            <!-- Calorías Recomendadas -->
+                            <div id="recommendedCalories" class="recommended-calories hidden" style="background: var(--color-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);">
+                                <div id="recommendedCaloriesContent"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Blog -->
+                <div id="tabContentBlog" class="tab-content">
+                    <div class="content-area-full">
+                        <div style="text-align: center; padding: 60px 20px;">
+                            <h2 style="color: var(--color-text); margin-bottom: 16px;">📝 Blog</h2>
+                            <p style="color: var(--color-text-secondary); font-size: 16px;">
+                                Próximamente: Descubre artículos, tips y recetas especiales.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Floating Buttons -->
         <div class="floating-actions">
         <button class="floating-add-btn" onclick="openRecipeModal()" title="Agregar Receta">+</button>
@@ -1781,14 +2717,49 @@
                             <div class="tags-input" id="tagsContainer"></div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group form-group-with-ai">
                             <label for="recipeCalories">Calorías</label>
                             <input type="number" id="recipeCalories" placeholder="ej: 350" min="0">
+                            <button type="button" class="ai-calculate-btn" onclick="calculateCaloriesWithAI()" title="Calcular calorías con IA">
+                                🤖 IA
+                            </button>
                         </div>
 
                         <div class="form-group">
                             <label for="recipeServings">Número de Personas</label>
                             <input type="number" id="recipeServings" placeholder="ej: 4" min="1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="recipePrepTime">⏱️ Tiempo de Preparación (minutos)</label>
+                            <input type="number" id="recipePrepTime" placeholder="ej: 30" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label style="margin-bottom: 12px;">🥗 Macronutrientes (por porción)</label>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                                <div>
+                                    <label for="recipeProtein" style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px;">💪 Proteínas (g)</label>
+                                    <input type="number" id="recipeProtein" placeholder="ej: 25" min="0" step="0.1">
+                                    <button type="button" class="macros-ai-btn" onclick="calculateMacroWithAI('protein')" title="Calcular proteínas con IA">
+                                        🤖 IA
+                                    </button>
+                                </div>
+                                <div>
+                                    <label for="recipeCarbs" style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px;">🍞 Carbohidratos (g)</label>
+                                    <input type="number" id="recipeCarbs" placeholder="ej: 40" min="0" step="0.1">
+                                    <button type="button" class="macros-ai-btn" onclick="calculateMacroWithAI('carbs')" title="Calcular carbohidratos con IA">
+                                        🤖 IA
+                                    </button>
+                                </div>
+                                <div>
+                                    <label for="recipeFats" style="font-size: 13px; color: var(--color-text-secondary); margin-bottom: 4px;">🥑 Grasas (g)</label>
+                                    <input type="number" id="recipeFats" placeholder="ej: 15" min="0" step="0.1">
+                                    <button type="button" class="macros-ai-btn" onclick="calculateMacroWithAI('fats')" title="Calcular grasas con IA">
+                                        🤖 IA
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group" id="recipeVisibilityGroup" style="display: none;">
@@ -1947,6 +2918,19 @@
         </div>
     </div>
 
+    <!-- Modal de Información Nutricional -->
+    <div id="infoModal" class="recipe-modal">
+        <div class="recipe-modal-content" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
+            <div class="recipe-modal-header">
+                <h2 id="infoModalTitle">Información</h2>
+                <button type="button" class="close-modal" onclick="closeInfoModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="infoModalContent" class="goal-information"></div>
+            </div>
+        </div>
+    </div>
+
     <footer class="app-footer">© Nicolás Cabello 2025 · Marca registrada.</footer>
 
     <!-- Firebase SDKs -->
@@ -2026,6 +3010,1213 @@
             if (!currentUser) return false;
             return currentUser.email === ADMIN_EMAIL;
         }
+
+        // Función para cambiar entre pestañas
+        function switchTab(tabName) {
+            // Mapeo de nombres a IDs
+            const tabMap = {
+                'recipes': { content: 'tabContentRecipes', button: 'tabRecipes' },
+                'planning': { content: 'tabContentPlanning', button: 'tabPlanning' },
+                'calculator': { content: 'tabContentCalculator', button: 'tabCalculator' },
+                'blog': { content: 'tabContentBlog', button: 'tabBlog' }
+            };
+
+            const tab = tabMap[tabName];
+            if (!tab) return;
+
+            // Ocultar todos los contenidos de pestañas
+            const allTabContents = document.querySelectorAll('.tab-content');
+            allTabContents.forEach(content => content.classList.remove('active'));
+
+            // Remover active de todos los botones
+            const allTabButtons = document.querySelectorAll('.tab-button');
+            allTabButtons.forEach(button => button.classList.remove('active'));
+
+            // Mostrar la pestaña seleccionada
+            const selectedContent = document.getElementById(tab.content);
+            const selectedButton = document.getElementById(tab.button);
+
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+            }
+            if (selectedButton) {
+                selectedButton.classList.add('active');
+            }
+
+            // Mostrar/ocultar botones flotantes solo en la pestaña de Recetas
+            const floatingActions = document.querySelector('.floating-actions');
+            if (floatingActions) {
+                if (tabName === 'recipes') {
+                    floatingActions.style.display = 'flex';
+                } else {
+                    floatingActions.style.display = 'none';
+                }
+            }
+
+            // Si estamos en otra pestaña, cerrar el detalle de receta si está abierto
+            if (tabName !== 'recipes') {
+                const recipeDetail = document.getElementById('recipeDetail');
+                if (recipeDetail && !recipeDetail.classList.contains('hidden')) {
+                    closeDetail();
+                }
+            }
+
+            // Cargar datos del usuario cuando se abre la calculadora
+            if (tabName === 'calculator') {
+                loadUserDataForCalculator();
+            }
+            
+            // Configurar event listeners para planificación semanal
+            if (tabName === 'planning') {
+                setupPlanningListeners();
+            }
+        }
+        
+        function setupPlanningListeners() {
+            const planningProtein = document.getElementById('planningProtein');
+            const planningCarbs = document.getElementById('planningCarbs');
+            const planningFats = document.getElementById('planningFats');
+            
+            if (planningProtein) {
+                planningProtein.removeEventListener('input', checkPlanningMacros);
+                planningProtein.addEventListener('input', checkPlanningMacros);
+            }
+            if (planningCarbs) {
+                planningCarbs.removeEventListener('input', checkPlanningMacros);
+                planningCarbs.addEventListener('input', checkPlanningMacros);
+            }
+            if (planningFats) {
+                planningFats.removeEventListener('input', checkPlanningMacros);
+                planningFats.addEventListener('input', checkPlanningMacros);
+            }
+            
+            // Verificar estado inicial
+            checkPlanningMacros();
+        }
+
+        let selectedGoal = null;
+
+        async function loadUserDataForCalculator() {
+            if (!currentUser || !USE_FIREBASE || !db) return;
+            
+            try {
+                const userDoc = await db.collection('users').doc(currentUser.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    if (userData.weight) {
+                        document.getElementById('calcWeight').value = userData.weight;
+                    }
+                    if (userData.height) {
+                        document.getElementById('calcHeight').value = userData.height;
+                    }
+                    if (userData.age) {
+                        document.getElementById('calcAge').value = userData.age;
+                    }
+                }
+            } catch (error) {
+                console.error('Error al cargar datos del usuario:', error);
+            }
+        }
+
+        function selectGoal(goal) {
+            selectedGoal = goal;
+            selectedSpecificOption = null;
+            
+            // Remover selección de todos los botones
+            document.querySelectorAll('.goal-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Agregar selección al botón clickeado
+            const btnId = goal === 'gain' ? 'goalGain' : (goal === 'maintain' ? 'goalMaintain' : 'goalLose');
+            document.getElementById(btnId).classList.add('selected');
+            
+            // Mostrar opciones específicas según objetivo
+            showGoalOptions(goal);
+            
+            // Ocultar calorías recomendadas hasta que se seleccione una opción
+            document.getElementById('recommendedCalories').classList.add('hidden');
+        }
+
+        function showGoalOptions(goal) {
+            const optionsDiv = document.getElementById('goalOptions');
+            const contentDiv = document.getElementById('goalOptionsContent');
+            
+            if (!optionsDiv || !contentDiv) return;
+            
+            let html = '';
+            
+            if (goal === 'gain') {
+                // 3 opciones de ganancia: conservadora, moderada, agresiva
+                html = `
+                    <h3 style="color: var(--color-text); margin-bottom: 16px; font-size: 18px; display: flex; align-items: center;">
+                        📈 Selecciona tu ritmo de ganancia
+                        <button type="button" class="info-btn" onclick="openInfoModal('gain')" style="margin-left: 8px;">ℹ️</button>
+                    </h3>
+                    <div class="goal-options-grid">
+                        <button type="button" class="goal-option-btn" onclick="selectSpecificOption('gain', 'conservative', 200)">
+                            <strong>Conservadora</strong>
+                            <div class="option-desc">+200 kcal/día</div>
+                            <div class="option-desc" style="margin-top: 4px; font-size: 11px;">~0.1-0.2 kg/semana</div>
+                        </button>
+                        <button type="button" class="goal-option-btn" onclick="selectSpecificOption('gain', 'moderate', 300)">
+                            <strong>Moderada</strong>
+                            <div class="option-desc">+300 kcal/día</div>
+                            <div class="option-desc" style="margin-top: 4px; font-size: 11px;">~0.25-0.4 kg/semana</div>
+                        </button>
+                        <button type="button" class="goal-option-btn" onclick="selectSpecificOption('gain', 'aggressive', 500)">
+                            <strong>Agresiva (Máximo recomendado)</strong>
+                            <div class="option-desc">+500 kcal/día</div>
+                            <div class="option-desc" style="margin-top: 4px; font-size: 11px;">~0.4-0.5 kg/semana</div>
+                        </button>
+                    </div>
+                `;
+            } else if (goal === 'lose') {
+                // 3 opciones de pérdida: conservadora, moderada, agresiva (máximo recomendado)
+                html = `
+                    <h3 style="color: var(--color-text); margin-bottom: 16px; font-size: 18px; display: flex; align-items: center;">
+                        📉 Selecciona tu ritmo de pérdida
+                        <button type="button" class="info-btn" onclick="openInfoModal('lose')" style="margin-left: 8px;">ℹ️</button>
+                    </h3>
+                    <div class="goal-options-grid">
+                        <button type="button" class="goal-option-btn" onclick="selectSpecificOption('lose', 'conservative', -300)">
+                            <strong>Conservadora</strong>
+                            <div class="option-desc">-300 kcal/día</div>
+                            <div class="option-desc" style="margin-top: 4px; font-size: 11px;">~0.3 kg/semana</div>
+                        </button>
+                        <button type="button" class="goal-option-btn" onclick="selectSpecificOption('lose', 'moderate', -500)">
+                            <strong>Moderada</strong>
+                            <div class="option-desc">-500 kcal/día</div>
+                            <div class="option-desc" style="margin-top: 4px; font-size: 11px;">~0.5 kg/semana</div>
+                        </button>
+                        <button type="button" class="goal-option-btn" onclick="selectSpecificOption('lose', 'aggressive', -1000)">
+                            <strong>Agresiva (Máximo recomendado)</strong>
+                            <div class="option-desc">-1000 kcal/día</div>
+                            <div class="option-desc" style="margin-top: 4px; font-size: 11px;">~1 kg/semana</div>
+                        </button>
+                    </div>
+                `;
+            } else if (goal === 'maintain') {
+                // Mantener peso: calcular directamente sin opciones
+                calculateRecommendedCalories(0);
+                optionsDiv.classList.add('hidden');
+                return;
+            }
+            
+            contentDiv.innerHTML = html;
+            optionsDiv.classList.remove('hidden');
+        }
+
+        function selectSpecificOption(goal, optionType, calorieAdjustment) {
+            selectedSpecificOption = { goal, optionType, calorieAdjustment };
+            
+            // Remover selección de todas las opciones
+            document.querySelectorAll('.goal-option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Agregar selección al botón clickeado
+            event.target.closest('.goal-option-btn').classList.add('selected');
+            
+            // Calcular y mostrar calorías recomendadas
+            calculateRecommendedCalories(calorieAdjustment);
+        }
+
+        function calculateRecommendedCalories(adjustment) {
+            const recommendedDiv = document.getElementById('recommendedCalories');
+            const contentDiv = document.getElementById('recommendedCaloriesContent');
+            
+            if (!recommendedDiv || !contentDiv) return;
+            
+            const recommendedCalories = currentTDEE + adjustment; // adjustment es negativo para pérdida
+            
+            let goalText = '';
+            if (selectedGoal === 'gain') {
+                goalText = 'Para ganancia muscular';
+            } else if (selectedGoal === 'lose') {
+                goalText = 'Para pérdida de peso';
+            } else {
+                goalText = 'Para mantener peso';
+            }
+            
+            contentDiv.innerHTML = `
+                <h3 style="color: var(--color-text); margin-bottom: 20px; font-size: 18px;">
+                    🎯 Calorías Recomendadas
+                </h3>
+                <div class="nutrition-result-card" style="max-width: 300px; margin: 0 auto;">
+                    <div class="nutrition-result-label">${goalText}</div>
+                    <div class="nutrition-result-value">${Math.round(recommendedCalories)}</div>
+                    <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 8px;">kcal/día</div>
+                    ${adjustment !== 0 ? `
+                    <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 8px;">
+                        ${adjustment > 0 ? `Superávit: +${adjustment} kcal` : `Déficit: ${adjustment} kcal`}
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            recommendedDiv.classList.remove('hidden');
+        }
+
+        function getGoalInfoHTML(goal) {
+            if (goal === 'gain') {
+                return `
+                    <h4>📈 Ganancia de Peso</h4>
+                    <p>La literatura científica y entidades como el American College of Sports Medicine (ACSM) y la National Strength and Conditioning Association (NSCA) sugieren que un ritmo controlado de ganancia de peso es clave para maximizar el crecimiento muscular minimizando la acumulación de grasa corporal.</p>
+                    <h4>🔹 Recomendación general:</h4>
+                    <ul>
+                        <li><strong>Principiantes:</strong> 0.25 a 0.5 kg por semana</li>
+                        <li><strong>Intermedios o avanzados:</strong> 0.1 a 0.25 kg por semana</li>
+                    </ul>
+                    <p>Esto equivale aproximadamente a un superávit calórico diario de 250 a 500 kcal, dependiendo del nivel de entrenamiento, la genética y la respuesta metabólica individual.</p>
+                    <p>Subir más rápido suele traducirse en una mayor proporción de grasa corporal acumulada, sin un incremento muscular adicional significativo (Slater & Phillips, Journal of Sports Sciences, 2011).</p>
+                    <h4>🧠 En resumen:</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nivel de experiencia</th>
+                                <th>Ganancia recomendada</th>
+                                <th>Superávit calórico</th>
+                                <th>Enfoque</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Principiante</td>
+                                <td>0.25–0.5 kg/semana</td>
+                                <td>+300–500 kcal/día</td>
+                                <td>Alta respuesta anabólica</td>
+                            </tr>
+                            <tr>
+                                <td>Intermedio</td>
+                                <td>0.1–0.25 kg/semana</td>
+                                <td>+200–300 kcal/día</td>
+                                <td>Crecimiento más lento y limpio</td>
+                            </tr>
+                            <tr>
+                                <td>Avanzado</td>
+                                <td>≤0.1 kg/semana</td>
+                                <td>+100–200 kcal/día</td>
+                                <td>Enfocado en mantener bajo nivel de grasa</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h4>🔍 Fuentes:</h4>
+                    <ul>
+                        <li>American College of Sports Medicine (ACSM). Position Stand: Nutrition and Athletic Performance. Medicine & Science in Sports & Exercise, 2016.</li>
+                        <li>National Strength and Conditioning Association (NSCA). NSCA's Guide to Sport and Exercise Nutrition. Human Kinetics, 2011.</li>
+                        <li>Slater, G., & Phillips, S. M. (2011). Nutrition guidelines for strength sports: Sprinting, weightlifting, throwing events, and bodybuilding. Journal of Sports Sciences, 29(sup1), S67–S77.</li>
+                    </ul>
+                `;
+            } else if (goal === 'lose') {
+                return `
+                    <h4>📉 Pérdida de Peso / Déficit Calórico</h4>
+                    <p>De acuerdo con organismos como los Centros para el Control y la Prevención de Enfermedades (CDC) y la Mayo Clinic, un déficit calórico moderado de entre 500 y 1000 kcal por día es el rango recomendado para lograr una pérdida de peso segura y sostenible.</p>
+                    <p>Este nivel de reducción permite perder aproximadamente 0.5 a 1 kilogramo por semana, manteniendo la masa muscular y evitando alteraciones metabólicas.</p>
+                    <p>Déficits más extremos pueden provocar pérdida de tejido magro, fatiga y una disminución del metabolismo basal, por lo que se aconseja siempre una reducción gradual y acompañamiento profesional.</p>
+                    <h4>🔍 Fuentes:</h4>
+                    <ul>
+                        <li>Centers for Disease Control and Prevention (CDC). "Healthy Weight – Losing Weight." Actualizado 2023. Disponible en: <a href="https://www.cdc.gov/healthyweight/losing_weight/index.html" target="_blank" style="color: var(--color-primary);">https://www.cdc.gov/healthyweight/losing_weight/index.html</a></li>
+                        <li>Mayo Clinic. "Weight loss: Choosing a diet that's right for you." 2024. Disponible en: <a href="https://www.mayoclinic.org" target="_blank" style="color: var(--color-primary);">https://www.mayoclinic.org</a></li>
+                        <li>World Health Organization (WHO). "Healthy diet – Fact sheet." 2022. Disponible en: <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" style="color: var(--color-primary);">https://www.who.int/news-room/fact-sheets/detail/healthy-diet</a></li>
+                    </ul>
+                `;
+            } else {
+                return `
+                    <h4>⚖️ Mantener Peso</h4>
+                    <p>Para mantener tu peso actual, es importante consumir aproximadamente la misma cantidad de calorías que tu cuerpo quema diariamente (TDEE - Total Daily Energy Expenditure).</p>
+                    <p>Mantener un equilibrio calórico adecuado te ayudará a preservar tu masa muscular, mantener tu metabolismo activo y sostener tu nivel de energía.</p>
+                    <p>Recuerda que las necesidades calóricas pueden variar según tu nivel de actividad, por lo que es importante ajustar tu consumo según tu rutina diaria.</p>
+                `;
+            }
+        }
+
+        function openInfoModal(goal) {
+            const modal = document.getElementById('infoModal');
+            const title = document.getElementById('infoModalTitle');
+            const content = document.getElementById('infoModalContent');
+            
+            if (!modal || !title || !content) {
+                console.error('No se encontraron elementos del modal');
+                return;
+            }
+            
+            // Establecer título según el objetivo
+            if (goal === 'gain') {
+                title.textContent = '📈 Información sobre Ganancia Muscular';
+            } else if (goal === 'lose') {
+                title.textContent = '📉 Información sobre Pérdida de Peso';
+            } else {
+                title.textContent = '⚖️ Información sobre Mantener Peso';
+            }
+            
+            // Llenar contenido
+            content.innerHTML = getGoalInfoHTML(goal);
+            
+            // Mostrar modal
+            modal.classList.add('active');
+        }
+
+        function closeInfoModal() {
+            const modal = document.getElementById('infoModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+
+        async function calculateNutrition() {
+            const weight = parseFloat(document.getElementById('calcWeight').value);
+            const height = parseFloat(document.getElementById('calcHeight').value);
+            const age = parseInt(document.getElementById('calcAge').value);
+            const gender = document.getElementById('calcGender').value;
+            const exercise = document.getElementById('calcExercise').value;
+            
+            if (!weight || !height || !age || !gender || !exercise) {
+                alert('Por favor, completa todos los campos requeridos.');
+                return;
+            }
+            
+            try {
+                showLoading('Calculando TDEE y TMB con IA...');
+                
+                const response = await fetch('/api/calculate-tdee', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        weight,
+                        height,
+                        age,
+                        gender,
+                        exerciseLevel: exercise
+                    })
+                });
+                
+                const rawText = await response.text();
+                if (!response.ok) {
+                    throw new Error(rawText || 'No se pudieron calcular los valores.');
+                }
+                
+                const result = JSON.parse(rawText);
+                const parsedData = parseAiRecipeResponse(result.text);
+                
+                if (!parsedData || (!parsedData.tmb && !parsedData.tdee)) {
+                    throw new Error('No se pudieron calcular los valores correctamente.');
+                }
+                
+                // Mostrar resultados
+                displayNutritionResults(parsedData);
+                
+            } catch (error) {
+                console.error('❌ Error al calcular nutrición:', error);
+                alert('No se pudieron calcular los valores. Intenta nuevamente.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        let currentTMB = 0;
+        let currentTDEE = 0;
+        let selectedSpecificOption = null;
+
+        function displayNutritionResults(data) {
+            const resultsDiv = document.getElementById('nutritionResults');
+            const contentDiv = document.getElementById('nutritionResultsContent');
+            const goalSelector = document.getElementById('goalSelector');
+            
+            if (!resultsDiv || !contentDiv) return;
+            
+            currentTMB = Math.round(data.tmb || 0);
+            currentTDEE = Math.round(data.tdee || 0);
+            
+            // Mostrar solo TMB y TDEE lado a lado
+            contentDiv.innerHTML = `
+                <div class="nutrition-result-card">
+                    <div class="nutrition-result-label">TMB (Metabolismo Basal)</div>
+                    <div class="nutrition-result-value">${currentTMB}</div>
+                    <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 8px;">kcal/día</div>
+                </div>
+                <div class="nutrition-result-card">
+                    <div class="nutrition-result-label">TDEE (Gasto Energético Total)</div>
+                    <div class="nutrition-result-value">${currentTDEE}</div>
+                    <div style="font-size: 12px; color: var(--color-text-secondary); margin-top: 8px;">kcal/día</div>
+                </div>
+            `;
+            
+            resultsDiv.classList.remove('hidden');
+            
+            // Mostrar selector de objetivo
+            if (goalSelector) {
+                goalSelector.classList.remove('hidden');
+                // Resetear selección
+                selectedGoal = null;
+                selectedSpecificOption = null;
+                document.querySelectorAll('.goal-btn').forEach(btn => btn.classList.remove('selected'));
+                document.getElementById('goalOptions').classList.add('hidden');
+                document.getElementById('recommendedCalories').classList.add('hidden');
+            }
+        }
+
+        // ============================================
+        // PLANIFICACIÓN SEMANAL
+        // ============================================
+        let selectedPlanningGoal = null;
+        let selectedFoods = {
+            proteins: [],
+            carbohydrates: [],
+            fats: [],
+            fruits: [],
+            vegetables: [],
+            dairy: [],
+            seasonings: []
+        };
+        let currentGeneratedPlan = null; // Almacenar el plan generado
+
+        // Función para verificar macronutrientes
+        function checkPlanningMacros() {
+            const planningProtein = document.getElementById('planningProtein');
+            const planningCarbs = document.getElementById('planningCarbs');
+            const planningFats = document.getElementById('planningFats');
+            const goalSelector = document.getElementById('planningGoalSelector');
+            
+            if (!planningProtein || !planningCarbs || !planningFats || !goalSelector) return;
+            
+            const hasProtein = planningProtein.value && parseFloat(planningProtein.value) > 0;
+            const hasCarbs = planningCarbs.value && parseFloat(planningCarbs.value) > 0;
+            const hasFats = planningFats.value && parseFloat(planningFats.value) > 0;
+            
+            if (hasProtein && hasCarbs && hasFats) {
+                goalSelector.classList.add('hidden');
+            } else {
+                goalSelector.classList.remove('hidden');
+            }
+        }
+
+        function selectPlanningGoal(goal) {
+            selectedPlanningGoal = goal;
+            
+            // Remover selección de todos los botones
+            document.querySelectorAll('#planningGoalSelector .goal-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Agregar selección al botón clickeado
+            const btnId = goal === 'gain' ? 'planningGoalGain' : (goal === 'maintain' ? 'planningGoalMaintain' : 'planningGoalLose');
+            const btn = document.getElementById(btnId);
+            if (btn) btn.classList.add('selected');
+            
+            // Calcular macronutrientes
+            calculatePlanningMacros(goal);
+        }
+
+        function calculatePlanningMacros(goal) {
+            const caloriesInput = document.getElementById('planningCalories');
+            if (!caloriesInput || !caloriesInput.value) {
+                alert('Por favor, ingresa las calorías primero.');
+                return;
+            }
+            
+            const calories = parseFloat(caloriesInput.value);
+            
+            // Ratios de macronutrientes según objetivo
+            let proteinRatio, carbsRatio, fatsRatio;
+            
+            if (goal === 'lose') {
+                // Bajar grasa: más proteína, menos carbohidratos
+                proteinRatio = 0.35; // 35% proteína
+                carbsRatio = 0.35;  // 35% carbohidratos
+                fatsRatio = 0.30;    // 30% grasas
+            } else if (goal === 'gain') {
+                // Subir masa: más carbohidratos y proteína
+                proteinRatio = 0.30; // 30% proteína
+                carbsRatio = 0.45;   // 45% carbohidratos
+                fatsRatio = 0.25;    // 25% grasas
+            } else {
+                // Mantener: balanceado
+                proteinRatio = 0.30; // 30% proteína
+                carbsRatio = 0.40;   // 40% carbohidratos
+                fatsRatio = 0.30;    // 30% grasas
+            }
+            
+            // Calcular gramos (1g proteína = 4 kcal, 1g carbohidratos = 4 kcal, 1g grasas = 9 kcal)
+            const proteinGrams = Math.round((calories * proteinRatio) / 4);
+            const carbsGrams = Math.round((calories * carbsRatio) / 4);
+            const fatsGrams = Math.round((calories * fatsRatio) / 9);
+            
+            // Llenar los campos
+            const proteinInput = document.getElementById('planningProtein');
+            const carbsInput = document.getElementById('planningCarbs');
+            const fatsInput = document.getElementById('planningFats');
+            
+            if (proteinInput) proteinInput.value = proteinGrams;
+            if (carbsInput) carbsInput.value = carbsGrams;
+            if (fatsInput) fatsInput.value = fatsGrams;
+            
+            // Ocultar selector de objetivo
+            const goalSelector = document.getElementById('planningGoalSelector');
+            if (goalSelector) goalSelector.classList.add('hidden');
+        }
+
+        function continueToFoodSelection() {
+            const caloriesInput = document.getElementById('planningCalories');
+            const proteinInput = document.getElementById('planningProtein');
+            const carbsInput = document.getElementById('planningCarbs');
+            const fatsInput = document.getElementById('planningFats');
+            
+            if (!caloriesInput || !caloriesInput.value) {
+                alert('Por favor, ingresa las calorías.');
+                return;
+            }
+            
+            const hasProtein = proteinInput && proteinInput.value && parseFloat(proteinInput.value) > 0;
+            const hasCarbs = carbsInput && carbsInput.value && parseFloat(carbsInput.value) > 0;
+            const hasFats = fatsInput && fatsInput.value && parseFloat(fatsInput.value) > 0;
+            
+            if (!hasProtein || !hasCarbs || !hasFats) {
+                alert('Por favor, completa los macronutrientes o selecciona un objetivo para calcularlos automáticamente.');
+                return;
+            }
+            
+            // Ocultar sección 1 y mostrar sección 2
+            const section1 = document.getElementById('planningSection1');
+            const section2 = document.getElementById('planningSection2');
+            
+            if (section1) section1.classList.add('hidden');
+            if (section2) {
+                section2.classList.remove('hidden');
+                generateFoodCategories();
+            }
+        }
+
+        function backToNutritionGoals() {
+            const section1 = document.getElementById('planningSection1');
+            const section2 = document.getElementById('planningSection2');
+            
+            if (section1) section1.classList.remove('hidden');
+            if (section2) section2.classList.add('hidden');
+        }
+
+        function continueToMealTypes() {
+            // Validar que haya seleccionado al menos algunos alimentos
+            const totalSelected = Object.values(selectedFoods).reduce((sum, arr) => sum + arr.length, 0);
+            
+            if (totalSelected === 0) {
+                alert('Por favor, selecciona al menos algunos alimentos disponibles.');
+                return;
+            }
+            
+            // Ocultar sección 2 y mostrar sección 3
+            const section2 = document.getElementById('planningSection2');
+            const section3 = document.getElementById('planningSection3');
+            
+            if (section2) section2.classList.add('hidden');
+            if (section3) section3.classList.remove('hidden');
+        }
+
+        function backToFoodSelection() {
+            const section2 = document.getElementById('planningSection2');
+            const section3 = document.getElementById('planningSection3');
+            
+            if (section2) section2.classList.remove('hidden');
+            if (section3) section3.classList.add('hidden');
+        }
+
+        function backToMealTypes() {
+            const section3 = document.getElementById('planningSection3');
+            const section4 = document.getElementById('planningSection4');
+            
+            if (section3) section3.classList.remove('hidden');
+            if (section4) section4.classList.add('hidden');
+        }
+
+        function generateFoodCategories() {
+            const container = document.getElementById('planningFoodCategories');
+            if (!container) return;
+            
+            const foodCategories = {
+                proteins: {
+                    title: 'Proteínas',
+                    instruction: 'Selecciona al menos 2',
+                    items: [
+                        { name: 'Pollo', icon: '🍗' },
+                        { name: 'Carne', icon: '🥩' },
+                        { name: 'Pescado', icon: '🐟' },
+                        { name: 'Atún', icon: '🥫' },
+                        { name: 'Langostinos', icon: '🦐' },
+                        { name: 'Huevo', icon: '🥚' },
+                        { name: 'Pavo', icon: '🦃' },
+                        { name: 'Chancho', icon: '🥓' },
+                        { name: 'Jamón', icon: '🍖' },
+                        { name: 'Tofu', icon: '🧈' },
+                        { name: 'Carne De Soya', icon: '🌱' },
+                        { name: 'Tempeh', icon: '🫘' },
+                        { name: 'Seitán', icon: '🍞' },
+                        { name: 'Proteína En Polvo', icon: '🥤' }
+                    ]
+                },
+                carbohydrates: {
+                    title: 'Carbohidratos',
+                    instruction: 'Selecciona al menos 3',
+                    items: [
+                        { name: 'Arroz', icon: '🍚' },
+                        { name: 'Papa', icon: '🥔' },
+                        { name: 'Camote', icon: '🍠' },
+                        { name: 'Yuca', icon: '🌿' },
+                        { name: 'Lentejas', icon: '🫘' },
+                        { name: 'Porotos', icon: '🫘' },
+                        { name: 'Garbanzos', icon: '🫘' },
+                        { name: 'Arvejas', icon: '🫛' },
+                        { name: 'Quinua', icon: '🌾' },
+                        { name: 'Pasta', icon: '🍝' },
+                        { name: 'Choclo', icon: '🌽' },
+                        { name: 'Popcorn', icon: '🍿' },
+                        { name: 'Avena', icon: '🥣' },
+                        { name: 'Pan', icon: '🍞' },
+                        { name: 'Tortilla', icon: '🫓' },
+                        { name: 'Cereal', icon: '🥣' }
+                    ]
+                },
+                fats: {
+                    title: 'Grasas',
+                    instruction: 'Selecciona al menos 2',
+                    items: [
+                        { name: 'Palta', icon: '🥑' },
+                        { name: 'Maní', icon: '🥜' },
+                        { name: 'Mantequilla De Maní', icon: '🥜' },
+                        { name: 'Almendras', icon: '🌰' },
+                        { name: 'Nueces Pecanas', icon: '🌰' },
+                        { name: 'Castañas De Cajú', icon: '🌰' },
+                        { name: 'Nueces', icon: '🌰' },
+                        { name: 'Aceitunas', icon: '🫒' },
+                        { name: 'Chía', icon: '🌱' },
+                        { name: 'Chocolate', icon: '🍫' }
+                    ]
+                },
+                fruits: {
+                    title: 'Frutas',
+                    instruction: 'Selecciona al menos 2',
+                    items: [
+                        { name: 'Plátano', icon: '🍌' },
+                        { name: 'Frutillas', icon: '🍓' },
+                        { name: 'Manzana', icon: '🍎' },
+                        { name: 'Arándanos', icon: '🫐' },
+                        { name: 'Piña', icon: '🍍' },
+                        { name: 'Papaya', icon: '🥭' },
+                        { name: 'Mandarina', icon: '🍊' },
+                        { name: 'Naranja', icon: '🍊' },
+                        { name: 'Kiwi', icon: '🥝' },
+                        { name: 'Mango', icon: '🥭' },
+                        { name: 'Sandía', icon: '🍉' },
+                        { name: 'Pera', icon: '🍐' },
+                        { name: 'Durazno', icon: '🍑' },
+                        { name: 'Uvas', icon: '🍇' },
+                        { name: 'Granadilla', icon: '🟣' },
+                        { name: 'Melón', icon: '🍈' },
+                        { name: 'Dátiles', icon: '🫒' },
+                        { name: 'Pitahaya', icon: '🐉' }
+                    ]
+                },
+                vegetables: {
+                    title: 'Verduras',
+                    items: [
+                        { name: 'Lechuga', icon: '🥬' },
+                        { name: 'Tomate', icon: '🍅' },
+                        { name: 'Brócoli', icon: '🥦' },
+                        { name: 'Zanahoria', icon: '🥕' },
+                        { name: 'Espinaca', icon: '🍃' },
+                        { name: 'Cebolla', icon: '🧅' },
+                        { name: 'Pepino', icon: '🥒' },
+                        { name: 'Zapallo Italiano', icon: '🥒' },
+                        { name: 'Repollo', icon: '🥬' },
+                        { name: 'Acelga', icon: '🌿' },
+                        { name: 'Espárrago', icon: '🌿' },
+                        { name: 'Apio', icon: '🌿' },
+                        { name: 'Cebollín', icon: '🌿' },
+                        { name: 'Alcachofa', icon: '🥬' },
+                        { name: 'Albahaca', icon: '🌿' },
+                        { name: 'Coliflor', icon: '🥦' },
+                        { name: 'Zapallo', icon: '🎃' },
+                        { name: 'Pimiento', icon: '🫑' },
+                        { name: 'Porotos Verdes', icon: '🌿' },
+                        { name: 'Betarraga', icon: '🍠' },
+                        { name: 'Rábano', icon: '🥕' },
+                        { name: 'Berenjena', icon: '🍆' },
+                        { name: 'Champiñones', icon: '🍄' }
+                    ]
+                },
+                dairy: {
+                    title: 'Lácteos y Alternativas a la Leche',
+                    items: [
+                        { name: 'Leche', icon: '🥛' },
+                        { name: 'Yogurt', icon: '🥛' },
+                        { name: 'Queso Blanco', icon: '🧀' },
+                        { name: 'Queso Amarillo', icon: '🧀' },
+                        { name: 'Bebida De Almendras', icon: '🥛' },
+                        { name: 'Bebida De Soya', icon: '🥛' },
+                        { name: 'Bebida De Coco', icon: '🥛' }
+                    ]
+                },
+                seasonings: {
+                    title: 'Condimentos Especiales',
+                    items: [
+                        { name: 'Mostaza', icon: '🍯' },
+                        { name: 'Salsa De Soya', icon: '🍶' },
+                        { name: 'Salsa De Tomate', icon: '🥫' },
+                        { name: 'Pimentón', icon: '🌶️' },
+                        { name: 'Canela', icon: '🪵' },
+                        { name: 'Cúrcuma', icon: '🥣' },
+                        { name: 'Cacao En Polvo', icon: '🍫' },
+                        { name: 'Curry', icon: '🍛' }
+                    ]
+                }
+            };
+            
+            let html = '';
+            
+            Object.keys(foodCategories).forEach(categoryKey => {
+                const category = foodCategories[categoryKey];
+                html += `
+                    <div class="food-category" data-category="${categoryKey}">
+                        <div class="food-category-header">
+                            <div>
+                                <h4 class="food-category-title">${category.title}</h4>
+                                ${category.instruction ? `<p class="food-category-instruction">${category.instruction}</p>` : ''}
+                            </div>
+                            <button type="button" class="select-all-btn" onclick="toggleSelectAll('${categoryKey}')">
+                                Seleccionar todo
+                            </button>
+                        </div>
+                        <div class="food-items-grid">
+                            ${category.items.map(item => `
+                                <button type="button" class="food-item-btn" onclick="toggleFoodItem('${categoryKey}', '${item.name}')" data-food="${item.name}">
+                                    <span class="food-icon">${item.icon}</span>
+                                    <span class="food-name">${item.name}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function toggleFoodItem(category, foodName) {
+            if (!selectedFoods[category]) {
+                selectedFoods[category] = [];
+            }
+            
+            const index = selectedFoods[category].indexOf(foodName);
+            const button = document.querySelector(`[data-category="${category}"] [data-food="${foodName}"]`);
+            
+            if (index > -1) {
+                selectedFoods[category].splice(index, 1);
+                if (button) button.classList.remove('selected');
+            } else {
+                selectedFoods[category].push(foodName);
+                if (button) button.classList.add('selected');
+            }
+        }
+
+        function toggleSelectAll(category) {
+            const categoryDiv = document.querySelector(`[data-category="${category}"]`);
+            if (!categoryDiv) return;
+            
+            const buttons = categoryDiv.querySelectorAll('.food-item-btn');
+            const allSelected = Array.from(buttons).every(btn => btn.classList.contains('selected'));
+            
+            buttons.forEach(button => {
+                const foodName = button.getAttribute('data-food');
+                if (allSelected) {
+                    button.classList.remove('selected');
+                    const index = selectedFoods[category].indexOf(foodName);
+                    if (index > -1) selectedFoods[category].splice(index, 1);
+                } else {
+                    button.classList.add('selected');
+                    if (!selectedFoods[category].includes(foodName)) {
+                        selectedFoods[category].push(foodName);
+                    }
+                }
+            });
+        }
+
+        async function generateMealPlan() {
+            const caloriesInput = document.getElementById('planningCalories');
+            const proteinInput = document.getElementById('planningProtein');
+            const carbsInput = document.getElementById('planningCarbs');
+            const fatsInput = document.getElementById('planningFats');
+            
+            const calories = caloriesInput ? parseFloat(caloriesInput.value) : 0;
+            const protein = proteinInput ? parseFloat(proteinInput.value) : 0;
+            const carbs = carbsInput ? parseFloat(carbsInput.value) : 0;
+            const fats = fatsInput ? parseFloat(fatsInput.value) : 0;
+            
+            // Validar que haya seleccionado al menos algunos alimentos
+            const totalSelected = Object.values(selectedFoods).reduce((sum, arr) => sum + arr.length, 0);
+            
+            if (totalSelected === 0) {
+                alert('Por favor, selecciona al menos algunos alimentos disponibles.');
+                return;
+            }
+            
+            // Obtener tipos de comidas seleccionados
+            const mealTypes = [];
+            if (document.getElementById('mealTypeBreakfast')?.checked) mealTypes.push('Desayuno');
+            if (document.getElementById('mealTypeLunch')?.checked) mealTypes.push('Almuerzo');
+            if (document.getElementById('mealTypeDinner')?.checked) mealTypes.push('Cena');
+            if (document.getElementById('mealTypeSnack')?.checked) mealTypes.push('Snack');
+            if (document.getElementById('mealTypeDessert')?.checked) mealTypes.push('Postre');
+            if (document.getElementById('mealTypeDrink')?.checked) mealTypes.push('Bebida');
+            
+            if (mealTypes.length === 0) {
+                alert('Por favor, selecciona al menos un tipo de comida.');
+                return;
+            }
+            
+            // Preparar lista de alimentos disponibles
+            const allFoods = [];
+            Object.keys(selectedFoods).forEach(category => {
+                selectedFoods[category].forEach(food => {
+                    allFoods.push(food);
+                });
+            });
+            
+            try {
+                showLoading('Generando tu plan semanal de comidas con IA...');
+                
+                const response = await fetch('/api/generate-meal-plan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        calories,
+                        protein,
+                        carbs,
+                        fats,
+                        mealTypes,
+                        availableFoods: allFoods
+                    })
+                });
+                
+                const rawText = await response.text();
+                if (!response.ok) {
+                    throw new Error(rawText || 'No se pudo generar el plan de comidas.');
+                }
+                
+                const result = JSON.parse(rawText);
+                const planData = parseMealPlanResponse(result.text);
+                
+                // Guardar plan generado
+                currentGeneratedPlan = planData;
+                
+                // Mostrar plan generado
+                displayGeneratedPlan(planData);
+                
+                // Ocultar sección 3 y mostrar sección 4
+                const section3 = document.getElementById('planningSection3');
+                const section4 = document.getElementById('planningSection4');
+                
+                if (section3) section3.classList.add('hidden');
+                if (section4) section4.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('❌ Error al generar plan de comidas:', error);
+                alert('No se pudo generar el plan de comidas. Intenta nuevamente.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function parseMealPlanResponse(text) {
+            try {
+                // Intentar parsear como JSON
+                const jsonMatch = text.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    return JSON.parse(jsonMatch[0]);
+                }
+                
+                // Si no es JSON válido, crear estructura básica
+                return {
+                    days: [
+                        { day: 'Lunes', meals: [] },
+                        { day: 'Martes', meals: [] },
+                        { day: 'Miércoles', meals: [] },
+                        { day: 'Jueves', meals: [] },
+                        { day: 'Viernes', meals: [] },
+                        { day: 'Sábado', meals: [] },
+                        { day: 'Domingo', meals: [] }
+                    ],
+                    rawText: text
+                };
+            } catch (error) {
+                console.error('Error al parsear respuesta:', error);
+                return {
+                    days: [],
+                    rawText: text
+                };
+            }
+        }
+
+        function displayGeneratedPlan(planData) {
+            const container = document.getElementById('planningGeneratedPlan');
+            if (!container) return;
+            
+            if (!planData.days || planData.days.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: var(--color-text-secondary);">
+                        <p>No se pudo generar el plan. Respuesta del servidor:</p>
+                        <pre style="background: rgba(0, 0, 0, 0.1); padding: 15px; border-radius: 8px; overflow-x: auto; text-align: left; font-size: 12px;">${planData.rawText || 'Sin respuesta'}</pre>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div class="weekly-plan">';
+            
+            planData.days.forEach(day => {
+                html += `
+                    <div class="day-plan">
+                        <div class="day-plan-header">${day.day}</div>
+                `;
+                
+                if (day.meals && day.meals.length > 0) {
+                    day.meals.forEach(meal => {
+                        html += `
+                            <div class="meal-item">
+                                <div class="meal-item-title">${meal.type || 'Comida'}</div>
+                                <div class="meal-item-content">
+                                    ${meal.description || meal.name || 'Sin descripción'}
+                                    ${meal.calories ? `<br><small>Calorías: ${meal.calories} kcal</small>` : ''}
+                                    ${meal.protein ? `<small> | Proteína: ${meal.protein}g</small>` : ''}
+                                    ${meal.carbs ? `<small> | Carbohidratos: ${meal.carbs}g</small>` : ''}
+                                    ${meal.fats ? `<small> | Grasas: ${meal.fats}g</small>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html += '<p style="color: var(--color-text-secondary);">Sin comidas asignadas</p>';
+                }
+                
+                html += '</div>';
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function acceptPlanAndShowShoppingCart() {
+            if (!currentGeneratedPlan || !currentGeneratedPlan.days) {
+                alert('No hay un plan generado para procesar.');
+                return;
+            }
+            
+            // Procesar el plan y generar el carrito
+            const shoppingCart = generateShoppingCart(currentGeneratedPlan);
+            
+            // Mostrar el carrito
+            displayShoppingCart(shoppingCart);
+            
+            // Ocultar sección 4 y mostrar sección 5
+            const section4 = document.getElementById('planningSection4');
+            const section5 = document.getElementById('planningSection5');
+            
+            if (section4) section4.classList.add('hidden');
+            if (section5) section5.classList.remove('hidden');
+        }
+
+        function backToGeneratedPlan() {
+            const section4 = document.getElementById('planningSection4');
+            const section5 = document.getElementById('planningSection5');
+            
+            if (section4) section4.classList.remove('hidden');
+            if (section5) section5.classList.add('hidden');
+        }
+
+        function generateShoppingCart(planData) {
+            const ingredientsMap = new Map(); // Map<ingrediente, {total: cantidad, unit: unidad}>
+            
+            // Recorrer todos los días y comidas
+            planData.days.forEach(day => {
+                if (day.meals && Array.isArray(day.meals)) {
+                    day.meals.forEach(meal => {
+                        // Priorizar array de ingredientes si existe
+                        if (meal.ingredients && Array.isArray(meal.ingredients)) {
+                            meal.ingredients.forEach(ing => {
+                                const key = ing.name.toLowerCase().trim();
+                                const quantity = parseFloat(ing.quantity) || 0;
+                                const unit = ing.unit || 'unidad';
+                                
+                                if (key && quantity > 0) {
+                                    if (ingredientsMap.has(key)) {
+                                        const existing = ingredientsMap.get(key);
+                                        // Sumar cantidades si tienen la misma unidad
+                                        if (existing.unit === unit) {
+                                            existing.total += quantity;
+                                        } else {
+                                            // Si las unidades son diferentes, mantener ambas o convertir
+                                            // Por ahora, sumamos asumiendo que son compatibles
+                                            existing.total += quantity;
+                                        }
+                                    } else {
+                                        ingredientsMap.set(key, {
+                                            name: ing.name,
+                                            total: quantity,
+                                            unit: unit
+                                        });
+                                    }
+                                }
+                            });
+                        } else if (meal.description) {
+                            // Fallback: extraer ingredientes de la descripción
+                            const ingredients = extractIngredientsFromDescription(meal.description);
+                            ingredients.forEach(ing => {
+                                const key = ing.name.toLowerCase().trim();
+                                if (ingredientsMap.has(key)) {
+                                    const existing = ingredientsMap.get(key);
+                                    // Sumar cantidades (asumiendo misma unidad)
+                                    if (existing.unit === ing.unit) {
+                                        existing.total += ing.quantity;
+                                    } else {
+                                        existing.total += ing.quantity;
+                                    }
+                                } else {
+                                    ingredientsMap.set(key, {
+                                        name: ing.name,
+                                        total: ing.quantity,
+                                        unit: ing.unit
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Convertir Map a Array y ordenar alfabéticamente
+            return Array.from(ingredientsMap.values()).sort((a, b) => 
+                a.name.localeCompare(b.name)
+            );
+        }
+
+        function extractIngredientsFromDescription(description) {
+            const ingredients = [];
+            
+            // Patrones para detectar ingredientes con cantidades
+            // Ejemplos: "200g de pollo", "2 huevos", "1 cucharada de aceite", "500ml de leche"
+            const patterns = [
+                /(\d+(?:\.\d+)?)\s*(g|gr|gramos?|kg|kilogramos?|ml|mililitros?|l|litros?|unidades?|un|ud|cdas?|cucharadas?|cdts?|cucharaditas?)\s+(?:de\s+)?([a-záéíóúñ\s]+?)(?:[,;]|$)/gi,
+                /(\d+(?:\.\d+)?)\s+([a-záéíóúñ\s]+?)(?:\s+de\s+)?(?:[,;]|$)/gi
+            ];
+            
+            // Intentar con cada patrón
+            patterns.forEach(pattern => {
+                let match;
+                while ((match = pattern.exec(description)) !== null) {
+                    const quantity = parseFloat(match[1]);
+                    const unit = match[2]?.toLowerCase().trim() || 'unidad';
+                    const name = match[3]?.trim() || match[2]?.trim() || '';
+                    
+                    if (name && quantity && !isNaN(quantity)) {
+                        // Normalizar unidades
+                        let normalizedUnit = unit;
+                        if (unit.match(/^(g|gr|gramos?)$/)) normalizedUnit = 'g';
+                        else if (unit.match(/^(kg|kilogramos?)$/)) normalizedUnit = 'kg';
+                        else if (unit.match(/^(ml|mililitros?)$/)) normalizedUnit = 'ml';
+                        else if (unit.match(/^(l|litros?)$/)) normalizedUnit = 'l';
+                        else if (unit.match(/^(unidades?|un|ud)$/)) normalizedUnit = 'unidad';
+                        else if (unit.match(/^(cdas?|cucharadas?)$/)) normalizedUnit = 'cucharada';
+                        else if (unit.match(/^(cdts?|cucharaditas?)$/)) normalizedUnit = 'cucharadita';
+                        
+                        ingredients.push({
+                            name: name.charAt(0).toUpperCase() + name.slice(1),
+                            quantity: quantity,
+                            unit: normalizedUnit
+                        });
+                    }
+                }
+            });
+            
+            // Si no se encontraron ingredientes con patrones, intentar dividir por comas/puntos
+            if (ingredients.length === 0) {
+                const parts = description.split(/[,;]/);
+                parts.forEach(part => {
+                    const trimmed = part.trim();
+                    if (trimmed && trimmed.length > 2) {
+                        ingredients.push({
+                            name: trimmed,
+                            quantity: 1,
+                            unit: 'unidad'
+                        });
+                    }
+                });
+            }
+            
+            return ingredients;
+        }
+
+        function displayShoppingCart(shoppingCart) {
+            const container = document.getElementById('planningShoppingCart');
+            if (!container) return;
+            
+            if (shoppingCart.length === 0) {
+                container.innerHTML = `
+                    <div style="padding: 20px; text-align: center; color: var(--color-text-secondary);">
+                        <p>No se pudieron extraer los ingredientes del plan. Por favor, revisa el plan generado.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '<div style="display: grid; gap: 12px;">';
+            
+            shoppingCart.forEach(item => {
+                html += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; background: rgba(0, 200, 150, 0.05); border: 1px solid rgba(0, 200, 150, 0.2); border-radius: 12px;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; color: var(--color-text); margin-bottom: 4px;">${item.name}</div>
+                        </div>
+                        <div style="font-size: 16px; font-weight: 600; color: var(--color-primary);">
+                            ${formatQuantity(item.total, item.unit)}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            
+            // Agregar resumen
+            html += `
+                <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, rgba(0, 200, 150, 0.1) 0%, rgba(168, 224, 99, 0.1) 100%); border-radius: 12px; text-align: center;">
+                    <div style="font-size: 18px; font-weight: 600; color: var(--color-primary); margin-bottom: 8px;">
+                        Total de ingredientes: ${shoppingCart.length}
+                    </div>
+                    <div style="font-size: 14px; color: var(--color-text-secondary);">
+                        Esta lista contiene todos los ingredientes necesarios para cumplir con tu plan semanal completo.
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function formatQuantity(quantity, unit) {
+            // Redondear cantidades grandes
+            let formattedQty = quantity;
+            if (quantity >= 1000 && unit === 'g') {
+                formattedQty = (quantity / 1000).toFixed(2);
+                unit = 'kg';
+            } else if (quantity >= 1000 && unit === 'ml') {
+                formattedQty = (quantity / 1000).toFixed(2);
+                unit = 'l';
+            } else if (quantity % 1 === 0) {
+                formattedQty = quantity.toString();
+            } else {
+                formattedQty = quantity.toFixed(2);
+            }
+            
+            return `${formattedQty} ${unit}`;
+        }
+
         let filterTagChips = [];
         let filterIngredientChips = [];
         let activeChipsModal = null;
@@ -2422,6 +4613,156 @@
             }
         }
 
+        async function calculateMacros(ingredients) {
+            try {
+                const response = await fetch('/api/calculate-macros', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ingredients })
+                });
+
+                const rawText = await response.text();
+                if (!response.ok) {
+                    throw new Error(rawText || 'No se pudieron calcular los macronutrientes.');
+                }
+
+                const result = JSON.parse(rawText);
+                const parsedData = parseAiRecipeResponse(result.text);
+                
+                if (!parsedData || (!parsedData.protein && !parsedData.carbs && !parsedData.fats)) {
+                    throw new Error('No se pudieron calcular los macronutrientes correctamente.');
+                }
+
+                return {
+                    protein: parsedData.protein || 0,
+                    carbs: parsedData.carbs || 0,
+                    fats: parsedData.fats || 0
+                };
+            } catch (error) {
+                console.error('❌ Error al calcular macronutrientes:', error);
+                throw error;
+            }
+        }
+
+        function getIngredientsFromForm() {
+            const ingredients = Array.from(document.querySelectorAll('.ingredient-item')).map(item => {
+                const name = item.querySelector('.ingredient-name').value;
+                const quantity = item.querySelector('.ingredient-quantity').value;
+                const unit = item.querySelector('.ingredient-unit').value;
+                if (!name || !quantity) return null;
+                // Extraer solo el número de quantity si tiene unidad incluida
+                const qtyMatch = quantity.toString().match(/^([\d.]+)/);
+                const qty = qtyMatch ? qtyMatch[1] : quantity;
+                return {
+                    name,
+                    quantity: qty,
+                    unit: unit || 'g'
+                };
+            }).filter(ing => ing !== null);
+            return ingredients;
+        }
+
+        async function calculateCaloriesWithAI() {
+            const ingredients = getIngredientsFromForm();
+            
+            if (ingredients.length === 0) {
+                alert('Por favor, agrega al menos un ingrediente antes de calcular las calorías.');
+                return;
+            }
+
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Consultando...';
+
+            try {
+                showLoading('Verificando información nutricional...');
+                
+                const response = await fetch('/api/calculate-calories', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ingredients })
+                });
+
+                const rawText = await response.text();
+                if (!response.ok) {
+                    throw new Error(rawText || 'No se pudieron calcular las calorías.');
+                }
+
+                const result = JSON.parse(rawText);
+                const parsedData = parseAiRecipeResponse(result.text);
+                
+                if (!parsedData || !parsedData.calories) {
+                    throw new Error('No se pudieron calcular las calorías correctamente.');
+                }
+
+                document.getElementById('recipeCalories').value = Math.round(parsedData.calories);
+            } catch (error) {
+                console.error('❌ Error al calcular calorías:', error);
+                alert('No se pudieron calcular las calorías. Intenta nuevamente.');
+            } finally {
+                hideLoading();
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        async function calculateMacroWithAI(macroType) {
+            const ingredients = getIngredientsFromForm();
+            
+            if (ingredients.length === 0) {
+                alert('Por favor, agrega al menos un ingrediente antes de calcular los macronutrientes.');
+                return;
+            }
+
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Consultando...';
+
+            try {
+                showLoading('Verificando información nutricional...');
+                
+                const response = await fetch('/api/calculate-macros', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ingredients })
+                });
+
+                const rawText = await response.text();
+                if (!response.ok) {
+                    throw new Error(rawText || 'No se pudieron calcular los macronutrientes.');
+                }
+
+                const result = JSON.parse(rawText);
+                const parsedData = parseAiRecipeResponse(result.text);
+                
+                if (!parsedData) {
+                    throw new Error('No se pudieron calcular los macronutrientes correctamente.');
+                }
+
+                const fieldMap = {
+                    'protein': { id: 'recipeProtein', value: parsedData.protein },
+                    'carbs': { id: 'recipeCarbs', value: parsedData.carbs },
+                    'fats': { id: 'recipeFats', value: parsedData.fats }
+                };
+
+                const field = fieldMap[macroType];
+                if (field && field.value) {
+                    document.getElementById(field.id).value = parseFloat(field.value).toFixed(1);
+                } else {
+                    throw new Error(`No se pudo calcular ${macroType}.`);
+                }
+            } catch (error) {
+                console.error(`❌ Error al calcular ${macroType}:`, error);
+                alert(`No se pudo calcular ${macroType}. Intenta nuevamente.`);
+            } finally {
+                hideLoading();
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
         function parseAiRecipeResponse(text) {
             if (!text) return null;
             let cleaned = text.trim();
@@ -2483,6 +4824,9 @@
                 });
                 html += '</ol>';
             }
+            if (data.prepTime) {
+                html += `<h5>⏱️ Tiempo de preparación</h5><p>${data.prepTime} minutos</p>`;
+            }
             if (data.macros) {
                 html += '<h5>Macros estimados</h5><ul>';
                 if (data.macros.calories) html += `<li>Calorías: ${data.macros.calories}</li>`;
@@ -2525,6 +4869,10 @@
             const macros = data.macros || {};
             document.getElementById('recipeCalories').value = macros.calories || '';
             document.getElementById('recipeServings').value = data.servings || macros.servings || '';
+            document.getElementById('recipePrepTime').value = data.prepTime || '';
+            document.getElementById('recipeProtein').value = macros.protein || '';
+            document.getElementById('recipeCarbs').value = macros.carbs || '';
+            document.getElementById('recipeFats').value = macros.fats || '';
 
             const tagsContainer = document.getElementById('tagsContainer');
             if (tagsContainer) {
@@ -2693,6 +5041,12 @@
                 tags: Array.isArray(recipe.tags) ? recipe.tags : [],
                 ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [],
                 steps: Array.isArray(recipe.steps) ? recipe.steps : [],
+                calories: recipe.calories ? (typeof recipe.calories === 'number' ? recipe.calories : parseInt(recipe.calories)) : null,
+                servings: recipe.servings ? (typeof recipe.servings === 'number' ? recipe.servings : parseInt(recipe.servings)) : null,
+                prepTime: recipe.prepTime ? (typeof recipe.prepTime === 'number' ? recipe.prepTime : parseInt(recipe.prepTime)) : null,
+                protein: recipe.protein ? (typeof recipe.protein === 'number' ? recipe.protein : parseFloat(recipe.protein)) : null,
+                carbs: recipe.carbs ? (typeof recipe.carbs === 'number' ? recipe.carbs : parseFloat(recipe.carbs)) : null,
+                fats: recipe.fats ? (typeof recipe.fats === 'number' ? recipe.fats : parseFloat(recipe.fats)) : null,
                 userId: recipe.userId || null, // Mantener userId si existe
                 isPublic: recipe.isPublic === true // Asegurar que isPublic sea boolean
             };
@@ -2973,8 +5327,8 @@
                     currentUser = user;
                     await loadUserData();
                     await checkUserProfile();
-                } else {
-                    showLogin();
+            } else {
+                showLogin();
                 }
             });
         }
@@ -3080,7 +5434,7 @@
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             const errorDiv = document.getElementById('loginError');
-            
+
             if (!email || !password) {
                 if (errorDiv) {
                     errorDiv.textContent = 'Completa todos los campos';
@@ -3102,7 +5456,7 @@
                 
                 if (isSignUp) {
                     await auth.createUserWithEmailAndPassword(email, password);
-                } else {
+            } else {
                     await auth.signInWithEmailAndPassword(email, password);
                 }
                 
@@ -3126,8 +5480,8 @@
                         errorMessage = error.message || 'Error al autenticar';
                     }
                     errorDiv.textContent = errorMessage;
-                    errorDiv.classList.remove('hidden');
-                }
+                errorDiv.classList.remove('hidden');
+            }
             }
         }
 
@@ -3263,6 +5617,26 @@
                     }
                 });
             }
+            
+            // Cerrar modal de información al hacer clic fuera
+            const infoModal = document.getElementById('infoModal');
+            if (infoModal) {
+                infoModal.addEventListener('click', function(e) {
+                    if (e.target === infoModal) {
+                        closeInfoModal();
+                    }
+                });
+            }
+            
+            // Cerrar modal de información con ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const infoModal = document.getElementById('infoModal');
+                    if (infoModal && infoModal.classList.contains('active')) {
+                        closeInfoModal();
+                    }
+                }
+            });
             
             checkLogin();
             setupEventListeners();
@@ -3530,6 +5904,10 @@
             const tags = Array.from(document.querySelectorAll('#tagsContainer .tag')).map(tag => tag.textContent.replace('×', '').trim());
             const calories = document.getElementById('recipeCalories').value ? parseInt(document.getElementById('recipeCalories').value) : null;
             const servings = document.getElementById('recipeServings').value ? parseInt(document.getElementById('recipeServings').value) : null;
+            const prepTime = document.getElementById('recipePrepTime').value ? parseInt(document.getElementById('recipePrepTime').value) : null;
+            const protein = document.getElementById('recipeProtein').value ? parseFloat(document.getElementById('recipeProtein').value) : null;
+            const carbs = document.getElementById('recipeCarbs').value ? parseFloat(document.getElementById('recipeCarbs').value) : null;
+            const fats = document.getElementById('recipeFats').value ? parseFloat(document.getElementById('recipeFats').value) : null;
             const imageUrl = document.getElementById('recipeImageUrl').value.trim();
             const image = currentImageData || imageUrl || null;
             
@@ -3567,6 +5945,59 @@
                 }
             }
 
+            // Calcular automáticamente solo si faltan TODOS los campos (calorías y macronutrientes)
+            let finalCalories = calories;
+            let finalProtein = protein;
+            let finalCarbs = carbs;
+            let finalFats = fats;
+            
+            const hasNoNutritionalData = !calories && !protein && !carbs && !fats;
+            
+            if (hasNoNutritionalData && ingredients.length > 0) {
+                try {
+                    showLoading('Calculando información nutricional con IA...');
+                    // Preparar ingredientes en formato correcto para la IA
+                    const ingredientsForMacros = ingredients.map(ing => {
+                        // Extraer solo el número de quantity si tiene unidad incluida
+                        const qtyMatch = ing.quantity ? ing.quantity.toString().match(/^([\d.]+)/) : null;
+                        const qty = qtyMatch ? qtyMatch[1] : (ing.quantity || '');
+                        return {
+                            name: ing.name,
+                            quantity: qty,
+                            unit: ing.unit || 'g'
+                        };
+                    });
+                    
+                    // Calcular macronutrientes y calorías
+                    const [calculatedMacros, calculatedCalories] = await Promise.all([
+                        calculateMacros(ingredientsForMacros),
+                        fetch('/api/calculate-calories', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ ingredients: ingredientsForMacros })
+                        }).then(res => res.text()).then(text => {
+                            const result = JSON.parse(text);
+                            const parsed = parseAiRecipeResponse(result.text);
+                            return parsed?.calories || null;
+                        }).catch(() => null)
+                    ]);
+                    
+                    finalProtein = calculatedMacros.protein;
+                    finalCarbs = calculatedMacros.carbs;
+                    finalFats = calculatedMacros.fats;
+                    finalCalories = calculatedCalories;
+                    
+                    // Actualizar los campos del formulario con los valores calculados
+                    if (finalCalories) document.getElementById('recipeCalories').value = Math.round(finalCalories);
+                    if (finalProtein) document.getElementById('recipeProtein').value = finalProtein.toFixed(1);
+                    if (finalCarbs) document.getElementById('recipeCarbs').value = finalCarbs.toFixed(1);
+                    if (finalFats) document.getElementById('recipeFats').value = finalFats.toFixed(1);
+                } catch (error) {
+                    console.warn('⚠️ No se pudo calcular la información nutricional automáticamente:', error);
+                    // Continuar sin información nutricional si falla el cálculo
+                }
+            }
+
             const isEditing = Boolean(editingRecipeId);
             const recipeId = editingRecipeId || Date.now();
             const isPublicCheckbox = document.getElementById('recipeIsPublic');
@@ -3580,8 +6011,12 @@
                 tags,
                 ingredients,
                 steps,
-                calories,
+                calories: finalCalories,
                 servings,
+                prepTime,
+                protein: finalProtein,
+                carbs: finalCarbs,
+                fats: finalFats,
                 image,
                 isPublic: isPublic
             };
@@ -3774,8 +6209,36 @@
                         <div class="recipe-info">
                             ${recipe.calories ? `<div class="recipe-info-item">🔥 ${recipe.calories} cal</div>` : ''}
                             ${recipe.servings ? `<div class="recipe-info-item">👥 ${recipe.servings} personas</div>` : ''}
+                            ${recipe.prepTime ? `<div class="recipe-info-item">⏱️ ${recipe.prepTime} min</div>` : ''}
                             <div class="recipe-info-item">📋 ${recipe.ingredients.length} ingredientes</div>
                         </div>
+                        ${(recipe.protein || recipe.carbs || recipe.fats) ? `
+                        <div class="recipe-card-macros">
+                            <div class="recipe-card-macros-grid">
+                                ${recipe.protein ? `
+                                <div class="recipe-card-macro-item">
+                                    <div class="recipe-card-macro-icon">💪</div>
+                                    <div class="recipe-card-macro-label">Proteínas</div>
+                                    <div class="recipe-card-macro-value">${recipe.protein}g</div>
+                                </div>
+                                ` : ''}
+                                ${recipe.carbs ? `
+                                <div class="recipe-card-macro-item">
+                                    <div class="recipe-card-macro-icon">🍞</div>
+                                    <div class="recipe-card-macro-label">Carbohidratos</div>
+                                    <div class="recipe-card-macro-value">${recipe.carbs}g</div>
+                                </div>
+                                ` : ''}
+                                ${recipe.fats ? `
+                                <div class="recipe-card-macro-item">
+                                    <div class="recipe-card-macro-icon">🥑</div>
+                                    <div class="recipe-card-macro-label">Grasas</div>
+                                    <div class="recipe-card-macro-value">${recipe.fats}g</div>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
                     </div>
                     <div class="recipe-card-actions">
                         <button type="button" class="btn btn-small btn-edit" onclick="editRecipe(${recipe.id}); event.stopPropagation();">✏️ Editar</button>
@@ -3854,6 +6317,12 @@
             const recipe = recipes.find(r => r.id === id);
             if (!recipe) return;
 
+            // Eliminar sección de macronutrientes anterior si existe
+            const existingMacrosSection = document.querySelector('.recipe-macros-section');
+            if (existingMacrosSection) {
+                existingMacrosSection.remove();
+            }
+
             document.getElementById('detailRecipeId').value = id;
             
             // Mostrar/ocultar botones de editar/eliminar según permisos
@@ -3896,30 +6365,72 @@
                 `<span class="recipe-tag">${tag}</span>`
             ).join('');
 
-            // Información de calorías y porciones
+            // Información general (calorías, porciones, tiempo, ingredientes, pasos)
             const infoHtml = `
                 ${recipe.calories ? `
                     <div class="recipe-detail-info-item">
-                        <div class="recipe-detail-info-label">Calorías</div>
+                        <div class="recipe-detail-info-label">🔥 Calorías</div>
                         <div class="recipe-detail-info-value">${recipe.calories}</div>
                     </div>
                 ` : ''}
                 ${recipe.servings ? `
                     <div class="recipe-detail-info-item">
-                        <div class="recipe-detail-info-label">Porciones</div>
+                        <div class="recipe-detail-info-label">👥 Porciones</div>
                         <div class="recipe-detail-info-value">${recipe.servings}</div>
                     </div>
                 ` : ''}
+                ${recipe.prepTime ? `
                 <div class="recipe-detail-info-item">
-                    <div class="recipe-detail-info-label">Ingredientes</div>
+                        <div class="recipe-detail-info-label">⏱️ Tiempo</div>
+                        <div class="recipe-detail-info-value">${recipe.prepTime} min</div>
+                    </div>
+                ` : ''}
+                <div class="recipe-detail-info-item">
+                    <div class="recipe-detail-info-label">📋 Ingredientes</div>
                     <div class="recipe-detail-info-value">${recipe.ingredients.length}</div>
                 </div>
                 <div class="recipe-detail-info-item">
-                    <div class="recipe-detail-info-label">Pasos</div>
+                    <div class="recipe-detail-info-label">👨‍🍳 Pasos</div>
                     <div class="recipe-detail-info-value">${recipe.steps.length}</div>
                 </div>
             `;
             document.getElementById('detailInfo').innerHTML = infoHtml;
+
+            // Sección separada de macronutrientes
+            const macrosHtml = (recipe.protein || recipe.carbs || recipe.fats) ? `
+                <div class="recipe-macros-section">
+                    <h4>🥗 Macronutrientes (por porción)</h4>
+                    <div class="recipe-macros-grid">
+                        ${recipe.protein ? `
+                        <div class="recipe-macro-item">
+                            <div class="recipe-macro-icon">💪</div>
+                            <div class="recipe-macro-label">Proteínas</div>
+                            <div class="recipe-macro-value">${recipe.protein} g</div>
+                        </div>
+                        ` : ''}
+                        ${recipe.carbs ? `
+                        <div class="recipe-macro-item">
+                            <div class="recipe-macro-icon">🍞</div>
+                            <div class="recipe-macro-label">Carbohidratos</div>
+                            <div class="recipe-macro-value">${recipe.carbs} g</div>
+                        </div>
+                        ` : ''}
+                        ${recipe.fats ? `
+                        <div class="recipe-macro-item">
+                            <div class="recipe-macro-icon">🥑</div>
+                            <div class="recipe-macro-label">Grasas</div>
+                            <div class="recipe-macro-value">${recipe.fats} g</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            ` : '';
+            
+            // Insertar macronutrientes después de la información general
+            const detailInfoElement = document.getElementById('detailInfo');
+            if (macrosHtml && detailInfoElement) {
+                detailInfoElement.insertAdjacentHTML('afterend', macrosHtml);
+            }
 
             document.getElementById('detailIngredients').innerHTML = recipe.ingredients.map(ing => {
                 let quantityText = ing.quantity || '';
@@ -3946,6 +6457,11 @@
         function closeDetail() {
             document.getElementById('recipeDetail').classList.remove('active');
             document.getElementById('recipesGrid').style.display = 'grid';
+            // Eliminar sección de macronutrientes si existe
+            const macrosSection = document.querySelector('.recipe-macros-section');
+            if (macrosSection) {
+                macrosSection.remove();
+            }
         }
 
 
@@ -3969,6 +6485,10 @@
             });
             document.getElementById('recipeCalories').value = recipe.calories || '';
             document.getElementById('recipeServings').value = recipe.servings || '';
+            document.getElementById('recipePrepTime').value = recipe.prepTime || '';
+            document.getElementById('recipeProtein').value = recipe.protein || '';
+            document.getElementById('recipeCarbs').value = recipe.carbs || '';
+            document.getElementById('recipeFats').value = recipe.fats || '';
             document.getElementById('recipeImageUrl').value = recipe.image && !recipe.image.startsWith('data:') ? recipe.image : '';
             
             // Mostrar/ocultar y cargar campo de visibilidad según el rol
