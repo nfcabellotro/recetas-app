@@ -431,10 +431,11 @@ app.get('/api/ping', (_req, res) => {
   res.json({ pong: true });
 });
 
-app.use(express.static(__dirname));
+// Servir archivos estáticos desde la carpeta web
+app.use(express.static(path.join(__dirname, 'web')));
 
 app.get('*', (_req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'web', 'index.html'));
 });
 
 app.listen(PORT, () => {

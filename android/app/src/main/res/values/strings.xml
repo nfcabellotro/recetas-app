@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kali.AI Recetas</string>
+    <string name="title_activity_main">Kali.AI Recetas</string>
+    <string name="package_name">com.kaliai.recetas</string>
+    <string name="custom_url_scheme">com.kaliai.recetas</string>
+</resources>

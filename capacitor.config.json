@@ -1,0 +1,9 @@
+{
+  "appId": "com.kaliai.recetas",
+  "appName": "Kali.AI Recetas",
+  "webDir": "web",
+  "server": {
+    "url": "http://localhost:3001",
+    "cleartext": true
+  }
+}
