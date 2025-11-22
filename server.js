@@ -231,66 +231,105 @@ app.post('/api/calculate-calories', async (req, res) => {
   }
 });
 
-function buildTDEEPrompt({ weight, height, age, gender, exerciseLevel }) {
-  const exerciseLevels = {
-    sedentary: 'sedentario (poco o ningún ejercicio)',
-    light: 'ligera (ejercicio ligero 1-3 días por semana)',
-    moderate: 'moderada (ejercicio moderado 3-5 días por semana)',
-    active: 'activa (ejercicio intenso 6-7 días por semana)',
-    very_active: 'muy activa (ejercicio muy intenso, trabajo físico)'
-  };
-
-  return `
-Eres un nutricionista experto.
-Calcula el TMB (Tasa Metabólica Basal) y TDEE (Gasto Energético Total Diario) para una persona con las siguientes características:
-
-- Peso: ${weight} kg
-- Estatura: ${height} cm
-- Edad: ${age} años
-- Sexo: ${gender === 'male' ? 'Masculino' : 'Femenino'}
-- Nivel de actividad: ${exerciseLevels[exerciseLevel] || exerciseLevel}
-
-El TMB debe calcularse usando la ecuación de Mifflin-St Jeor:
-- Hombres: TMB = 10 × peso(kg) + 6.25 × estatura(cm) - 5 × edad(años) + 5
-- Mujeres: TMB = 10 × peso(kg) + 6.25 × estatura(cm) - 5 × edad(años) - 161
-
-El TDEE debe calcularse multiplicando el TMB por el factor de actividad correspondiente al nivel de ejercicio.
-
-Factores de actividad aproximados:
-- Sedentario: 1.2
-- Ligera: 1.375
-- Moderada: 1.55
-- Activa: 1.725
-- Muy activa: 1.9
-
-Responde ÚNICAMENTE con un JSON válido en este formato exacto:
-{
-  "tmb": number,
-  "tdee": number
+/**
+ * Calcula el TMB (Tasa Metabólica Basal) usando la fórmula Mifflin-St Jeor
+ * @param {number} weight - Peso en kg
+ * @param {number} height - Estatura en cm
+ * @param {number} age - Edad en años
+ * @param {string} gender - 'male' o 'female'
+ * @returns {number} TMB en calorías por día
+ */
+function calculateBMR(weight, height, age, gender) {
+  // Fórmula Mifflin-St Jeor
+  // Hombres: TMB = 10 × peso(kg) + 6.25 × estatura(cm) - 5 × edad(años) + 5
+  // Mujeres: TMB = 10 × peso(kg) + 6.25 × estatura(cm) - 5 × edad(años) - 161
+  const baseTMB = 10 * weight + 6.25 * height - 5 * age;
+  return gender === 'male' ? baseTMB + 5 : baseTMB - 161;
 }
 
-Los valores deben ser números enteros (calorías por día).
-No incluyas comentarios ni texto adicional, solo el JSON.
-`;
+/**
+ * Obtiene el factor de actividad según el nivel de ejercicio
+ * @param {string} exerciseLevel - Nivel de ejercicio
+ * @returns {number} Factor de actividad
+ */
+function getActivityFactor(exerciseLevel) {
+  const factors = {
+    sedentary: 1.2,      // Sedentario (poco o ningún ejercicio)
+    light: 1.375,        // Ligera (ejercicio ligero 1-3 días por semana)
+    moderate: 1.55,      // Moderada (ejercicio moderado 3-5 días por semana)
+    active: 1.725,       // Activa (ejercicio intenso 6-7 días por semana)
+    very_active: 1.9     // Muy activa (ejercicio muy intenso, trabajo físico)
+  };
+  return factors[exerciseLevel] || 1.2;
+}
+
+/**
+ * Calcula el TDEE (Total Daily Energy Expenditure)
+ * @param {number} bmr - Tasa Metabólica Basal
+ * @param {string} exerciseLevel - Nivel de ejercicio
+ * @returns {number} TDEE en calorías por día
+ */
+function calculateTDEE(bmr, exerciseLevel) {
+  const activityFactor = getActivityFactor(exerciseLevel);
+  return bmr * activityFactor;
 }
 
 app.post('/api/calculate-tdee', async (req, res) => {
   try {
-    const { weight, height, age, gender, exerciseLevel } = req.body || {};
+    const { weight, height, age, gender, exerciseLevel, tmb } = req.body || {};
 
-    if (!weight || !height || !age || !gender || !exerciseLevel) {
-      return res.status(400).json({ error: 'Se requieren peso, estatura, edad, sexo y nivel de ejercicio.' });
+    if (!exerciseLevel) {
+      return res.status(400).json({ error: 'Se requiere el nivel de ejercicio.' });
     }
 
-    const prompt = buildTDEEPrompt({ weight, height, age, gender, exerciseLevel });
-    const result = await model.generateContent(prompt);
-    const responseText = result?.response?.text();
+    let calculatedTMB;
+    let finalTMB;
 
-    if (!responseText) {
-      return res.status(500).json({ error: 'No se obtuvo respuesta del modelo.' });
+    // Si se proporciona TMB directamente, usarlo; si no, calcularlo
+    if (tmb !== undefined && tmb !== null) {
+      // Modo: TMB ingresado manualmente
+      const tmbNum = parseFloat(tmb);
+      
+      if (isNaN(tmbNum) || tmbNum <= 0) {
+        return res.status(400).json({ error: 'El TMB debe ser un valor numérico positivo.' });
+      }
+      
+      finalTMB = tmbNum;
+    } else {
+      // Modo: Calcular TMB usando fórmula Mifflin-St Jeor
+      if (!weight || !height || !age || !gender) {
+        return res.status(400).json({ error: 'Se requieren peso, estatura, edad y sexo para calcular el TMB, o proporciona el TMB directamente.' });
+      }
+
+      // Validar valores numéricos
+      const weightNum = parseFloat(weight);
+      const heightNum = parseFloat(height);
+      const ageNum = parseInt(age);
+
+      if (isNaN(weightNum) || isNaN(heightNum) || isNaN(ageNum) || weightNum <= 0 || heightNum <= 0 || ageNum <= 0) {
+        return res.status(400).json({ error: 'Peso, estatura y edad deben ser valores numéricos positivos.' });
+      }
+
+      if (gender !== 'male' && gender !== 'female') {
+        return res.status(400).json({ error: 'El sexo debe ser "male" o "female".' });
+      }
+
+      // Calcular TMB usando la fórmula Mifflin-St Jeor
+      calculatedTMB = calculateBMR(weightNum, heightNum, ageNum, gender);
+      finalTMB = calculatedTMB;
     }
+    
+    // Calcular TDEE multiplicando TMB por el factor de actividad
+    const tdee = calculateTDEE(finalTMB, exerciseLevel);
 
-    res.json({ text: responseText });
+    // Redondear a números enteros
+    const result = {
+      tmb: Math.round(finalTMB),
+      tdee: Math.round(tdee)
+    };
+
+    // Retornar en el formato esperado por el frontend
+    res.json({ text: JSON.stringify(result) });
   } catch (error) {
     console.error('❌ Error al calcular TDEE/TMB:', error);
     res.status(500).json({
@@ -300,17 +339,29 @@ app.post('/api/calculate-tdee', async (req, res) => {
   }
 });
 
-function buildMealPlanPrompt({ calories, protein, carbs, fats, mealTypes, availableFoods }) {
+function buildMealPlanPrompt({ calories, dailyCalories, protein, carbs, fats, mealTypes, availableFoods, exerciseDays = [] }) {
   const foodsList = availableFoods.join(', ');
   const mealTypesList = mealTypes.join(', ');
+  
+  // Construir información de calorías por día
+  let dailyCaloriesInfo = '';
+  if (dailyCalories) {
+    const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    dailyCaloriesInfo = '\nCalorías específicas por día:\n';
+    daysOfWeek.forEach(day => {
+      const dayCal = dailyCalories[day] || calories;
+      const isExercise = exerciseDays.includes(day);
+      dailyCaloriesInfo += `- ${day}: ${dayCal} kcal${isExercise ? ' (Día de ejercicio - más calorías)' : ''}\n`;
+    });
+  }
 
   return `
-Eres un nutricionista experto. Genera un plan semanal de comidas (7 días) que cumpla con los siguientes objetivos nutricionales diarios:
+Eres un nutricionista experto. Genera un plan semanal de comidas (7 días) que cumpla con los siguientes objetivos nutricionales:
 
-- Calorías totales por día: ${calories} kcal
-- Proteínas: ${protein} g
-- Carbohidratos: ${carbs} g
-- Grasas: ${fats} g
+Calorías base: ${calories} kcal/día${dailyCaloriesInfo ? dailyCaloriesInfo : ''}
+- Proteínas: ${protein} g/día
+- Carbohidratos: ${carbs} g/día
+- Grasas: ${fats} g/día
 
 Tipos de comidas a incluir: ${mealTypesList}
 
@@ -319,11 +370,12 @@ ${foodsList}
 
 IMPORTANTE:
 1. El plan debe ser para 7 días (Lunes a Domingo)
-2. Cada día debe cumplir aproximadamente con las calorías y macronutrientes especificados
-3. Distribuye las calorías entre los tipos de comidas seleccionados
-4. SOLO usa los alimentos de la lista disponible
-5. Para cada comida, especifica ingredientes con cantidades en gramos/ml/unidades/cucharaditas
-6. Calcula y muestra las calorías y macronutrientes aproximados de cada comida
+2. Cada día debe cumplir con las calorías específicas indicadas arriba (si se proporcionaron) o las calorías base
+3. Los días de ejercicio deben tener más calorías que los días de descanso
+4. Distribuye las calorías entre los tipos de comidas seleccionados
+5. SOLO usa los alimentos de la lista disponible
+6. Para cada comida, especifica ingredientes con cantidades en gramos/ml/unidades/cucharaditas
+7. Calcula y muestra las calorías y macronutrientes aproximados de cada comida
 
 Responde ÚNICAMENTE con un JSON válido en este formato exacto:
 {
@@ -395,7 +447,7 @@ No incluyas comentarios ni texto adicional, solo el JSON.
 
 app.post('/api/generate-meal-plan', async (req, res) => {
   try {
-    const { calories, protein, carbs, fats, mealTypes, availableFoods } = req.body || {};
+    const { calories, dailyCalories, protein, carbs, fats, mealTypes, availableFoods, exerciseDays } = req.body || {};
 
     if (!calories || !protein || !carbs || !fats) {
       return res.status(400).json({ error: 'Se requieren calorías y macronutrientes.' });
@@ -409,7 +461,16 @@ app.post('/api/generate-meal-plan', async (req, res) => {
       return res.status(400).json({ error: 'Se requiere al menos un alimento disponible.' });
     }
 
-    const prompt = buildMealPlanPrompt({ calories, protein, carbs, fats, mealTypes, availableFoods });
+    const prompt = buildMealPlanPrompt({ 
+      calories, 
+      dailyCalories, 
+      protein, 
+      carbs, 
+      fats, 
+      mealTypes, 
+      availableFoods,
+      exerciseDays: exerciseDays || []
+    });
     const result = await model.generateContent(prompt);
     const responseText = result?.response?.text();
 

@@ -153,3 +153,7 @@ npx cap doctor
 - Para desarrollo local, usa `http://localhost:3001`
 - Para producción, usa la URL de tu servidor desplegado
 
+
+
+
+
